@@ -1,13 +1,13 @@
 ---
-title: 05 - Control Flow Loops
-description: Learn how to repeat code efficiently using loops in Java
+title: 05 - Alur Kontrol Perulangan Loops
+description: Pelajari cara mengulang kode secara efisien menggunakan loop di Java
 ---
 
-Loops let you repeat code without writing it over and over. They're essential for processing collections, generating worlds, and updating game objects.
+Loop memungkinkanmu mengulang kode tanpa harus menulisnya berulang-ulang. Ini sangat penting untuk memproses koleksi data, menghasilkan dunia game, dan memperbarui objek game.
 
-## While Loop
+## While Loop/Perulangan While
 
-Repeats code while a condition is true:
+Mengulang kode selama kondisi bernilai benar/true:
 
 ```java tab="Code"
 
@@ -17,7 +17,7 @@ while (countdown > 0) {
     System.out.println(countdown);
     countdown--;
 }
-System.out.println("Blast off!");
+System.out.println("Meluncur!");
 ```
 
 ```java tab="Output"
@@ -26,53 +26,53 @@ System.out.println("Blast off!");
 3
 2
 1
-Blast off!
+Meluncur!
 ```
 
-### Structure
+### Struktue
 
 ```java
 while (condition) {
-    // code to repeat
+    // kode untuk diulang
 }
 ```
 
-<Callout type="warning" title="Infinite Loops">
-  Always make sure your loop condition will eventually become false, or your program will run forever!
+<Callout type="peringatan" title="Loop tak terbatas/infinites loop">
+  Selalu pastikan kondisi loop-mu pada akhirnya akan menjadi salah/false, atau programmu akan berjalan selamanya!
 
   ```java tab="Bad Example"
   int x = 0;
   while (x < 10) {
-      System.out.println("Stuck!");
-      // Forgot to increase x!
+      System.out.println("Macet!");
+      // lupa menaikan nilai x!
   }
   ```
 
   ```java tab="Good Example"
   int x = 0;
   while (x < 10) {
-      System.out.println("Counting: " + x);
-      x++; // This increases x! // [!code ++]
+      System.out.println("Menghitung: " + x);
+      x++; // Ini menaikan nilai x! // [!code ++]
   }
   ```
 </Callout>
 
 ## Do-While Loop
 
-Like a while loop, but always runs at least once:
+Seperti while loop, tapi selalu berjalan setidaknya satu kali:
 
 ```java
 int health = 0;
 
 do {
-    System.out.println("Attempting respawn...");
+    System.out.println("Mencoba respawn...");
     health = 100;
 } while (health <= 0);
 ```
 
 ## For Loop
 
-Best when you know how many times to repeat:
+Terbaik saat kamu tahu berapa kali harus mengulang:
 
 ```java tab="Code"
 for (int i = 1; i <= 5; i++) {
@@ -88,58 +88,58 @@ Level 4
 Level 5
 ```
 
-### Structure
+### Struktur
 
 ```java
-for (initialization; condition; update) {
-    // code to repeat
+for (inisialisasi; kondisi; update) {
+    // code untuk diulang
 }
 ```
 
-<Callout type="info" title="For Loop Parts">
+<Callout type="info" title="Bagian-bagian For Loop">
   ```java
   for (int i = 0; i < 10; i++) {
   //   ^         ^        ^
-  //   Start     Stop     Step
+  //   Mulai     Berhenti     Langkah
   }
   ```
 
-  * **Initialization**: int i = 0 - Runs once at the start
-  * **Condition**: i < 10 - Checked before each loop
-  * **Update**: i++ - Runs after each loop
+  * **Inisialisasi**: int i = 0 - Berjalan sekali di awal
+  * **Kondisi**: i < 10 - Dicek sebelum setiap putaran loop
+  * **Update**: i++ - Berjalan setelah setiap putaran loop
 </Callout>
 
-## Break Statement
+## Pernyataan break
 
-You can exit a loop early with `break`:
+Kamu bisa keluar dari loop lebih awal dengan break:
 
 ```java
 
 for (int i = 1; i <= 10; i++) {
     if (i == 6) {
-        break; // Exit loop when i is 6
+        break; // Keluar loop saat i adalah 6
     }
     System.out.println(i);
 }
 
 ```
 
-## Continue Statement
+## Pernyataan Continue
 
-Skip to the next iteration with `continue`:
+Lompati ke iterasi berikutnya dengan `continue`:
 
 ```java
 for (int i = 1; i <= 10; i++) {
     if (i % 2 == 0) {
-        continue; // Skip even numbers
+        continue; // Lewati bilangan genap
     }
-    System.out.println(i); // Prints only odd numbers
+    System.out.println(i); // Hanya mencetak bilangan ganjil
 }
 ```
 
-## Nested Loops
+## Loop Bersarang/Nested Loops
 
-You can put loops inside other loops:
+Kamu bisa menaruh loop di dalam loop lainnya:
 
 ```java
 for (int i = 1; i <= 3; i++) {
@@ -149,17 +149,17 @@ for (int i = 1; i <= 3; i++) {
 }
 ```
 
-<Callout type="warning" title="Nested Loop Performance">
-  Be careful with nested loops! They can slow down your mod significantly.
+<Callout type="peringatan" title="Performa Nested Loop">
+  Hati-hati dengan nested loop! Mereka bisa memperlambat mod-mu secara signifikan.
 
   ```java
-  // This runs 1,000,000 times!
+  // Ini berjalan 1,000,000 kali!
   for (int i = 0; i < 1000; i++) {
       for (int j = 0; j < 1000; j++) {
-          // Code here
+          // Code disini
       }
   }
   ```
 
-  Try to avoid deeply nested loops when processing large amounts of data.
+  Cobalah hindari nested loop yang dalam saat memproses data dalam jumlah besar.
 </Callout>
