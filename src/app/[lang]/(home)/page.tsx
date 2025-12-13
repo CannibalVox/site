@@ -45,7 +45,7 @@ export default function HomePage() {
       title: "HyEnergy: Electric Motor",
       author: "by seyager",
       image: ElectricMotor,
-      link: "https://x.com/SeyagerYT" // temporary link until a proper link is provided
+      link: "https://x.com/SeyagerYT"
     },
     {
       title: "Dragonfly Mount",
