@@ -42,7 +42,7 @@ Instead, report security vulnerabilities by:
    - Fill out the form with details
 
 2. **Email**
-   - Send details to: `outreach@itsneil.dev`
+   - Send details to: `hello@hytalemodding.guide`
    - Include "SECURITY" in the subject line
 
 3. **Private Contact**
