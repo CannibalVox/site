@@ -3,6 +3,11 @@ import { defineI18nUI } from "fumadocs-ui/i18n";
 import { i18n } from "@/lib/i18n";
 import Script from "next/script";
 import englishTranslations from "@/../messages/en.json";
+import { Geist } from "next/font/google";
+
+const geist = Geist({
+  subsets: ["latin"],
+});
 
 const translations = Object.fromEntries(
   i18n.languages.map((lang) => {
@@ -33,7 +38,9 @@ export default async function RootLayout({
   return (
     <html lang={lang} dir={dir} suppressHydrationWarning>
       <body>
-        <RootProvider i18n={provider(lang)}>{children}</RootProvider>
+        <div className={geist.className}>
+          <RootProvider i18n={provider(lang)}>{children}</RootProvider>
+        </div>
       </body>
     </html>
   );
