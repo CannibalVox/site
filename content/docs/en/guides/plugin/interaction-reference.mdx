@@ -1,0 +1,408 @@
+---
+title: "Interaction Type Reference"
+description: "A list of all Interaction types provided by Hypixel, along with the meaning of all fields, and how they fit together."
+authors:
+    - name: "Stephen Baynham"
+      url: "https://github.com/cannibalvox"
+---
+
+## Base Interaction Types
+
+### Interaction 
+
+All interactions of every type below are inherited from Interaction and have these fields.
+
+#### - ViewDistance 
+
+- Distance in blocks at which other players can see the effects from this interaction.
+- **Type**: `Double` (Default: 96.0), **Optional**
+
+#### - Effects 
+
+- Sound and particle effects that should trigger when this interaction begins executing 
+- **Type**: `InteractionEffects`, **Optional**
+
+#### - HorizontalSpeedMultiplier 
+
+- Multiplier applied to the User entity's movement speed while this interaction is executing 
+- **Type**: `Float` (Default: 1.0), **Optional**
+
+#### - RunTime
+
+- If provided, this interaction will continue executing for at least this long before the interaction chain moves onto the next interaction 
+- **Type**: `Float`, **Optional**
+
+#### - CancelOnItemChange
+
+- If true, this interaction will be cancelled if the User entity's held item changes during execution. This can happen either due to the selected hotbar slot changing or the contents of the item's inventory slot changing.
+- **Type**: `Boolean` (Default: true), **Optional**
+
+#### - Rules 
+
+- If provided, adds additional limitations and cancellation conditions to this interaction.
+- **Type**: `InteractionRules`, **Required**
+
+#### - Settings 
+
+- If provided, adds additional per-GameMode settings to the interaction
+- **Type**: `Map`, **Optional**, **Key Type**: Flag, **Value Type**: InteractionSettings
+- **Flag Values**
+  - `Creative`: The game is currently in Creative Mode 
+  - `Adventure`: The game is currently in Adventure Mode 
+
+#### Camera 
+
+- Arrays of camera motion keyframes for cutscenes and reveals.
+- **Type**: `InteractionCameraSettings`, **Optional**
+
+### SimpleInteraction 
+
+Most interaction types below are inherited from SimpleInteraction and have these
+ fields.  If a type does not have these fields, the documentation will mention it.
+
+The purpose of SimpleInteraction is to facilitate Interaction chaining by taking different paths
+ based on whether the Interaction succeeded or failed.  The circumstances under which
+ a given Interaction fails are generally type-specific (and described in the documentation
+ below), but all interactions will be marked failed if they are cancelled via one of the
+ many, many mechanisms for doing so.
+
+It is valid to use SimpleInteraction (the type is called "Simple" when creating an Interaction asset)
+  and it is sometimes valuable when you want to use the Interaction fields with no additional functionality.
+
+#### - Next 
+
+- After this Interaction has finished, "Next" will be executed if this Interaction did not fail.  
+- **Type**: `Asset` (Interaction), **Optional**
+
+#### - Failed
+
+- After this Interaction has finished, "Failed" will be executed if this Interaction failed.
+- **Type**: `Asset` (Interaction), **Optional**
+
+
+## Control Flow 
+
+These are Interaction types used to control the flow of an Interaction chain and allow Interactions
+ to be composed into more complex behaviors.  These Interaction types generally do not pertain to 
+ the game and instead pertain to the Interaction system itself.
+
+### Condition 
+
+This Interaction will fail if one of the fields is provided but does not match the current state.
+
+#### - RequiredGameMode 
+
+- If provided, the interaction will fail if the current GameMode does not match the provided value
+- **Type**: `Flag`, **Optional**
+- **Flag Values**
+  - `Creative`: The game is currently in Creative Mode 
+  - `Adventure`: The game is currently in Adventure Mode 
+
+#### - Jumping 
+
+- If provided, the interaction will fail if the player's Jumping state does not match the provided value. (i.e. if True, the player must be jumping, if False, the player must not be)
+- **Type**: `Boolean`, **Optional**
+
+#### - Swimming
+
+- If provided, the interaction will fail if the player's Jumping state does not match the provided value. (i.e. if True, the player must be swimming, if False, the player must not be)
+- **Type**: `Boolean`, **Optional**
+
+#### - Crouching 
+
+- If provided, the interaction will fail if the player's Crouching state does not match the provided value. (i.e. if True, the player must be crouching, if False, the player must not be)
+- **Type**: `Boolean`, **Optional**
+
+#### - Running 
+
+- If provided, the interaction will fail if the player's Running state does not match the provided value. (i.e. if True, the player must be running, if False, the player must not be)
+- **Type**: `Boolean`, **Optional**
+
+#### - Flying 
+
+- If provided, the interaction will fail if the player's Flying state does not match the provided value. (i.e. if True, the player must be flying, if False, the player must not be)
+- **Type**: `Boolean`, **Optional**
+
+
+### FirstClick
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields. 
+
+This interaction has two fields that each contain a reference to an Interaction: Click and Hold.  If the root interaction 
+ of the chain was initiated by a client button/key press (or simulated NPC input) and the input was a tap, then 
+ the Click interaction is run. if it was a longer press, then the Hold interaction is run.
+
+As a minor implementation detail, this interaction is internally marked as failed when the Hold path is followed. 
+ This generally shouldn't matter.  If the interaction was not initiated by a key press, the Click path will be followed,
+ but it seems risky to rely on that behavior.
+
+#### - Click 
+
+- If provided and the root interaction of the chain was initiated by button/key press, this interaction is executed next 
+  if the press was a quick tap. 
+- **Type**: `Asset` (Interaction), **Optional**
+
+#### - Hold 
+
+- If provided and the root interaction of the chain was initiated by a button/key press, this interaction is executed next 
+  if the press was a longer hold.
+- **Type**: `Asset` (Interaction), **Optional**
+
+
+### Interrupt 
+
+This interaction can be used to cancel one or more running interaction chains on an entity and **all forked interaction 
+  chains they have spawned that are still currently running**.  All interaction chains canceled in this manner will be marked as 
+  Failed, which may have implications for other interaction chains if the canceled chains are themselves forked from 
+  other chains that are still running.
+
+#### - Entity 
+
+- The entity that is the owner of the target interaction chains.  This field can indicate the Owner, User, or Target of 
+  this interaction chain.
+- **Type**: `Flag` (Default: User), **Required**
+- **Flag Values**
+  - `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. If no User is provided on startup, the User will be the Owner.
+  - `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+  - `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+#### - InterruptTypes 
+
+- A set of InteractionTypes that are to be interrupted. Only interactions of these types are affected. If null, all types will be interrupted. (Note: An empty set will interrupt NO TYPES.)
+- **Type**: `Array`, **Optional**, **Element Type**: Flag 
+- **Flag Values**
+  - `Primary`
+  - `Secondary`
+  - `Ability1`
+  - `Ability2`
+  - `Ability3`
+  - `Use`
+  - `Pick`
+  - `Pickup`
+  - `CollisionEnter`
+  - `CollisionLeave`
+  - `Collision`
+  - `EntityStatEffect`
+  - `SwapTo`
+  - `SwapFrom`
+  - `Death`
+  - `Wielding`
+  - `ProjectileSpawn`
+  - `ProjectilHit`
+  - `ProjectileMiss`
+  - `ProjectileBounce`
+  - `Held`
+  - `HeldOffhand`
+  - `Equipped`
+  - `Dodge`
+  - `GameModeSwap`
+
+#### - RequiredTag
+
+- An asset tag that, if provided, the RootInteraction of the interaction chain must have to be canceled.
+- **Type**: `String`, **Optional**
+
+#### - ExcludedTag 
+
+- An asset tag that, if provided, the RootInteraction of the interaction chain must not have to be canceled.
+- **Type**: `String`, **Optional**
+
+
+### Parallel
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields. 
+
+This interaction has a field `Interactions` that is an array of RootInteraction assets. The list must contain at least 
+  two RootInteractions.  This interaction will fork all of its children except for the first into their 
+  own interaction chains and immediately complete. After this interaction completes, the interaction chain will 
+  execute the first RootInteraction in the `Interactions` list.
+
+This interaction does not have any failure conditions and is indifferent to the fate of the forked interaction chains.
+
+#### - Interactions 
+
+- An array of RootInteractions that will be forked or executed.
+- **Type**: `Array`, **Required**, **Element Type**: Asset (RootInteraction)
+- **Constraint**: The array must consist of at least two elements
+
+
+### Repeat 
+
+This interaction has a field `ForkInteractions` that is an asset of type RootInteraction. This asset will fork that 
+  RootInteraction into its own interaction chain and then wait for it to complete. If the RootInteraction fails, this 
+  interaction will complete immediately and be marked failed. Otherwise, the RootInteraction will be forked and run again,
+  up to a specified total number of times.
+
+#### - ForkInteractions 
+
+- A RootInteraction that will be forked
+- **Type**: `Asset` (RootInteraction), **Required**
+
+#### - Repeat
+
+- The total number of times to fork ForkInteractions. If -1 is provided, ForkInteractions will continue being forked and executed
+  indefinitely, until this interaction is cancelled or until ForkInteractions fails.
+- **Type**: `Integer` (Default: 1), **Optional**
+- **Constraint**: The value must be -1 or a positive integer. 0 is not valid.
+
+
+### Replace 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.
+
+This interaction uses the InteractionVars system that is avaiable for items. InteractionVars are RootInteractions that 
+  can be attached to an Item asset with a name.  This interaction specifies a var name, and if this interaction chain is 
+  owned by an item and that item has an InteractionVar of the same name, then this interaction will immediately execute 
+  the RootInteraction on the var.  Otherwise, it will execute the default RootInteraction specified in this interaction. 
+  If no default is specified, then this interaction will be marked as failed.
+
+#### - Var 
+
+- The name of the InteractionVar to execute.
+- **Type**: `String`, **Required**
+
+#### - DefaultValue
+
+- The RootInteraction to execute if the owning item does not have an InteractionVar by the specified name. If not provided,
+  the interaction will be marked as failed.
+- **Type**: `Asset` (RootInteraction), **Optional**
+
+#### - DefaultOk
+
+- If false, then an angry message will be printed to the server logs if the owning item does not have an InteractionVar by 
+  the specified name.  The functioning of this interaction will be otherwise unaffected.
+- **Type**: `Boolean` (Default: false), **Optional**
+
+
+### RunRootInteraction 
+
+This interaction immediately executes the provided RootInteraction as part of this interaction chain. This interaction 
+  does not have any failure conditions.
+
+#### - RootInteraction
+
+- The RootInteraction to execute.
+- **Type**: `Asset` (RootInteraction), **Required**
+
+
+### Serial 
+
+This interaction does not inherit from SimpleInteraction and therefore has no Next or Failed fields.
+
+This interaction has a field `Interactions` which is a list of Interaction assets. This interaction immediately 
+  completes and the interaction chain continues by executing the interactions in the list one at a time. This 
+  interaction does not have any failure conditions.
+
+#### - Interactions 
+
+- An array of Interaction assets to execute 
+- **Type**: `Array`, **Required**, **Element Type**: Asset (Interaction)
+
+
+## Blocks
+
+### BlockCondition 
+### DestroyCondition 
+### PlacementCountCondition
+### BreakBlock
+### ChangeBlock 
+### ChangeState 
+### CycleBlockGroup
+### DestroyBlock
+### PickBlock
+### PlaceBlock
+
+## Items 
+
+### AddItem 
+### PickupItem
+
+## EntityEffects
+
+### EffectCondition 
+### ApplyEffect 
+### ClearEntityEffect
+
+## Cooldowns 
+
+### CooldownCondition
+### IncrementCooldown
+### ResetCooldown
+
+## Combo Chains 
+
+### CancelChain 
+### ChainFlag 
+### Chaining 
+
+
+
+ApplyForce 
+Bed 
+BuilderTool 
+Camera 
+CameraShake 
+CanBreakRespawnPoint
+ChangeActiveSlot
+ChangeFarmingStage
+ChangeStat 
+ChangeStatWithModifier 
+Charging 
+CheckUniqueItemUsage
+ContextualUseNPC 
+DamageEntity 
+Door
+EquipItem
+ExitInstance
+Explode 
+FertilizeSoil
+
+HarvestCrop
+HubPortal
+IncreaseBackpackCapacity
+LaunchPad
+LaunchProjectile
+LearnRecipe
+MemoriesCondition
+ModifyInventory
+Mount 
+MovementCondition
+OpenBenchPage
+OpenContainer
+OpenCustomUI
+OpenItemStackContainer
+OpenPage
+OpenProcessingBench
+PlaceFluid
+
+Portal
+PortalReturn 
+PrefabSelectionInteraction
+PrefabSetAnchorInteraction
+Projectile
+RefillContainer
+RemoveEntity
+RunOnBlockTypes
+Seating 
+SendMessage 
+SetMemoriesCapacity
+SpawnDeployableAtHitLocation
+SpawnDeployableFromRaycast
+SpawnMinecart 
+SpawnNPC 
+SpawnPrefab
+StartObjective
+StatsCondition
+StatsConditionWithModifier
+TeleportConfigInstance
+TeleportInstance
+Teleporter 
+ToggleGlider 
+TriggerSpawnMarkers 
+UseBlock
+UseCaptureCrate
+UseCoop
+UseEntity
+UseNPC 
+UseWateringCan
+Wielding
