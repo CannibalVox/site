@@ -8,9 +8,9 @@ title: PatchStyle
 
 | Name                 | Type                     | Description |
 | -------------------- | ------------------------ | ----------- |
-| **Area**             | [Padding](padding.md)    |             |
-| **Color**            | [Color](../../markup.md) |             |
-| **Anchor**           | [Anchor](anchor.md)      |             |
+| **Area**             | [Padding](padding)    |             |
+| **Color**            | [Color](../../markup) |             |
+| **Anchor**           | [Anchor](anchor)      |             |
 | **HorizontalBorder** | Integer                  |             |
 | **VerticalBorder**   | Integer                  |             |
 | **TexturePath**      | UI Path (String)         |             |

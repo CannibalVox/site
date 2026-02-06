@@ -8,6 +8,6 @@ title: TextButtonStyleState
 
 | Name                     | Type                                 | Description |
 | ------------------------ | ------------------------------------ | ----------- |
-| **Background**           | [PatchStyle](patchstyle.md) / String |             |
-| **LabelStyle**           | [LabelStyle](labelstyle.md)          |             |
+| **Background**           | [PatchStyle](patchstyle) / String |             |
+| **LabelStyle**           | [LabelStyle](labelstyle)          |             |
 | **LabelMaskTexturePath** | UI Path (String)                     |             |

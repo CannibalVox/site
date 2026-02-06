@@ -8,10 +8,10 @@ title: InputFieldButtonStyle
 
 | Name               | Type                                                     | Description |
 | ------------------ | -------------------------------------------------------- | ----------- |
-| **Texture**        | [PatchStyle](patchstyle.md) / String                     |             |
-| **HoveredTexture** | [PatchStyle](patchstyle.md) / String                     |             |
-| **PressedTexture** | [PatchStyle](patchstyle.md) / String                     |             |
+| **Texture**        | [PatchStyle](patchstyle) / String                     |             |
+| **HoveredTexture** | [PatchStyle](patchstyle) / String                     |             |
+| **PressedTexture** | [PatchStyle](patchstyle) / String                     |             |
 | **Width**          | Integer                                                  |             |
 | **Height**         | Integer                                                  |             |
 | **Offset**         | Integer                                                  |             |
-| **Side**           | [InputFieldButtonSide](../enums/inputfieldbuttonside.md) |             |
+| **Side**           | [InputFieldButtonSide](../enums/inputfieldbuttonside) |             |

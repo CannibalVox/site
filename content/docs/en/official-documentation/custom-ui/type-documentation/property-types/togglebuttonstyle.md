@@ -8,8 +8,8 @@ title: ToggleButtonStyle
 
 | Name         | Type                                                | Description |
 | ------------ | --------------------------------------------------- | ----------- |
-| **Default**  | [ToggleButtonStyleState](togglebuttonstylestate.md) |             |
-| **Hovered**  | [ToggleButtonStyleState](togglebuttonstylestate.md) |             |
-| **Pressed**  | [ToggleButtonStyleState](togglebuttonstylestate.md) |             |
-| **Disabled** | [ToggleButtonStyleState](togglebuttonstylestate.md) |             |
-| **Sounds**   | [ButtonSounds](buttonsounds.md)                     |             |
+| **Default**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |
+| **Hovered**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |
+| **Pressed**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |
+| **Disabled** | [ToggleButtonStyleState](togglebuttonstylestate) |             |
+| **Sounds**   | [ButtonSounds](buttonsounds)                     |             |

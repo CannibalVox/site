@@ -8,14 +8,14 @@ title: ColorPickerDropdownBoxStyle
 
 | Name                 | Type                                                                              | Description |
 | -------------------- | --------------------------------------------------------------------------------- | ----------- |
-| **Background**       | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground.md) |             |
-| **ColorPickerStyle** | [ColorPickerStyle](colorpickerstyle.md)                                           |             |
-| **Overlay**          | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground.md) |             |
-| **ArrowBackground**  | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground.md) |             |
-| **ArrowAnchor**      | [Anchor](anchor.md)                                                               |             |
-| **Sounds**           | [ButtonSounds](buttonsounds.md)                                                   |             |
-| **PanelBackground**  | [PatchStyle](patchstyle.md) / String                                              |             |
+| **Background**       | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground) |             |
+| **ColorPickerStyle** | [ColorPickerStyle](colorpickerstyle)                                           |             |
+| **Overlay**          | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground) |             |
+| **ArrowBackground**  | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground) |             |
+| **ArrowAnchor**      | [Anchor](anchor)                                                               |             |
+| **Sounds**           | [ButtonSounds](buttonsounds)                                                   |             |
+| **PanelBackground**  | [PatchStyle](patchstyle) / String                                              |             |
 | **PanelWidth**       | Integer                                                                           |             |
 | **PanelHeight**      | Integer                                                                           |             |
-| **PanelPadding**     | [Padding](padding.md)                                                             |             |
+| **PanelPadding**     | [Padding](padding)                                                             |             |
 | **PanelOffset**      | Integer                                                                           |             |

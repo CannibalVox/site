@@ -8,10 +8,10 @@ title: ColorPickerStyle
 
 | Name                          | Type                                                      | Description |
 | ----------------------------- | --------------------------------------------------------- | ----------- |
-| **ButtonBackground**          | [PatchStyle](patchstyle.md) / String                      |             |
-| **ButtonFill**                | [PatchStyle](patchstyle.md) / String                      |             |
-| **OpacitySelectorBackground** | [PatchStyle](patchstyle.md) / String                      |             |
-| **TextFieldDecoration**       | [InputFieldDecorationStyle](inputfielddecorationstyle.md) |             |
-| **TextFieldInputStyle**       | [InputFieldStyle](inputfieldstyle.md)                     |             |
-| **TextFieldPadding**          | [Padding](padding.md)                                     |             |
+| **ButtonBackground**          | [PatchStyle](patchstyle) / String                      |             |
+| **ButtonFill**                | [PatchStyle](patchstyle) / String                      |             |
+| **OpacitySelectorBackground** | [PatchStyle](patchstyle) / String                      |             |
+| **TextFieldDecoration**       | [InputFieldDecorationStyle](inputfielddecorationstyle) |             |
+| **TextFieldInputStyle**       | [InputFieldStyle](inputfieldstyle)                     |             |
+| **TextFieldPadding**          | [Padding](padding)                                     |             |
 | **TextFieldHeight**           | Integer                                                   |             |

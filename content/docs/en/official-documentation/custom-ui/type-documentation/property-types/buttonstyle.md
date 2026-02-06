@@ -8,8 +8,8 @@ title: ButtonStyle
 
 | Name         | Type                                    | Description |
 | ------------ | --------------------------------------- | ----------- |
-| **Default**  | [ButtonStyleState](buttonstylestate.md) |             |
-| **Hovered**  | [ButtonStyleState](buttonstylestate.md) |             |
-| **Pressed**  | [ButtonStyleState](buttonstylestate.md) |             |
-| **Disabled** | [ButtonStyleState](buttonstylestate.md) |             |
-| **Sounds**   | [ButtonSounds](buttonsounds.md)         |             |
+| **Default**  | [ButtonStyleState](buttonstylestate) |             |
+| **Hovered**  | [ButtonStyleState](buttonstylestate) |             |
+| **Pressed**  | [ButtonStyleState](buttonstylestate) |             |
+| **Disabled** | [ButtonStyleState](buttonstylestate) |             |
+| **Sounds**   | [ButtonSounds](buttonsounds)         |             |

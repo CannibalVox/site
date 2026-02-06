@@ -14,7 +14,7 @@ title: ColorOptionGridStyle
 | **HighlightSize**           | Integer                              |             |
 | **HighlightOffsetLeft**     | Integer                              |             |
 | **HighlightOffsetTop**      | Integer                              |             |
-| **HighlightBackground**     | [PatchStyle](patchstyle.md) / String |             |
+| **HighlightBackground**     | [PatchStyle](patchstyle) / String |             |
 | **MaskTexturePath**         | UI Path (String)                     |             |
-| **FrameBackground**         | [PatchStyle](patchstyle.md) / String |             |
-| **Sounds**                  | [ButtonSounds](buttonsounds.md)      |             |
+| **FrameBackground**         | [PatchStyle](patchstyle) / String |             |
+| **Sounds**                  | [ButtonSounds](buttonsounds)      |             |

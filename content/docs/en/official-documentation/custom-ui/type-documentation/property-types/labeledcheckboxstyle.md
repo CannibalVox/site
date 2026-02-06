@@ -8,5 +8,5 @@ title: LabeledCheckBoxStyle
 
 | Name          | Type                                                      | Description |
 | ------------- | --------------------------------------------------------- | ----------- |
-| **Checked**   | [LabeledCheckBoxStyleState](labeledcheckboxstylestate.md) |             |
-| **Unchecked** | [LabeledCheckBoxStyleState](labeledcheckboxstylestate.md) |             |
+| **Checked**   | [LabeledCheckBoxStyleState](labeledcheckboxstylestate) |             |
+| **Unchecked** | [LabeledCheckBoxStyleState](labeledcheckboxstylestate) |             |

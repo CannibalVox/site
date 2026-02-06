@@ -9,8 +9,8 @@ title: Tab
 | Name             | Type                                 | Description |
 | ---------------- | ------------------------------------ | ----------- |
 | **Id**           | String                               |             |
-| **Icon**         | [PatchStyle](patchstyle.md) / String |             |
-| **IconSelected** | [PatchStyle](patchstyle.md) / String |             |
-| **IconAnchor**   | [Anchor](anchor.md)                  |             |
+| **Icon**         | [PatchStyle](patchstyle) / String |             |
+| **IconSelected** | [PatchStyle](patchstyle) / String |             |
+| **IconAnchor**   | [Anchor](anchor)                  |             |
 | **Text**         | String                               |             |
 | **TooltipText**  | String                               |             |

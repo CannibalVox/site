@@ -8,8 +8,8 @@ title: TextTooltipStyle
 
 | Name           | Type                                             | Description |
 | -------------- | ------------------------------------------------ | ----------- |
-| **LabelStyle** | [LabelStyle](labelstyle.md)                      |             |
-| **Padding**    | [Padding](padding.md)                            |             |
-| **Background** | [PatchStyle](patchstyle.md) / String             |             |
+| **LabelStyle** | [LabelStyle](labelstyle)                      |             |
+| **Padding**    | [Padding](padding)                            |             |
+| **Background** | [PatchStyle](patchstyle) / String             |             |
 | **MaxWidth**   | Integer                                          |             |
-| **Alignment**  | [TooltipAlignment](../enums/tooltipalignment.md) |             |
+| **Alignment**  | [TooltipAlignment](../enums/tooltipalignment) |             |

@@ -8,7 +8,7 @@ title: SubMenuItemStyleState
 
 | Name                     | Type                                 | Description |
 | ------------------------ | ------------------------------------ | ----------- |
-| **Background**           | [PatchStyle](patchstyle.md) / String |             |
-| **LabelStyle**           | [LabelStyle](labelstyle.md)          |             |
-| **BindingLabelStyle**    | [LabelStyle](labelstyle.md)          |             |
+| **Background**           | [PatchStyle](patchstyle) / String |             |
+| **LabelStyle**           | [LabelStyle](labelstyle)          |             |
+| **BindingLabelStyle**    | [LabelStyle](labelstyle)          |             |
 | **LabelMaskTexturePath** | UI Path (String)                     |             |

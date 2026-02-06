@@ -8,8 +8,8 @@ title: LabelStyle
 
 | Name                    | Type                                         | Description |
 | ----------------------- | -------------------------------------------- | ----------- |
-| **HorizontalAlignment** | [LabelAlignment](../enums/labelalignment.md) |             |
-| **VerticalAlignment**   | [LabelAlignment](../enums/labelalignment.md) |             |
+| **HorizontalAlignment** | [LabelAlignment](../enums/labelalignment) |             |
+| **VerticalAlignment**   | [LabelAlignment](../enums/labelalignment) |             |
 | **Wrap**                | Boolean                                      |             |
 | **FontName**            | Font Name (String)                           |             |
 | **FontSize**            | Float                                        |             |
@@ -20,4 +20,4 @@ title: LabelStyle
 | **RenderBold**          | Boolean                                      |             |
 | **RenderItalics**       | Boolean                                      |             |
 | **RenderUnderlined**    | Boolean                                      |             |
-| **Alignment**           | [LabelAlignment](../enums/labelalignment.md) |             |
+| **Alignment**           | [LabelAlignment](../enums/labelalignment) |             |

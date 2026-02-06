@@ -8,8 +8,8 @@ title: InputFieldIcon
 
 | Name        | Type                                                 | Description |
 | ----------- | ---------------------------------------------------- | ----------- |
-| **Texture** | [PatchStyle](patchstyle.md) / String                 |             |
+| **Texture** | [PatchStyle](patchstyle) / String                 |             |
 | **Width**   | Integer                                              |             |
 | **Height**  | Integer                                              |             |
 | **Offset**  | Integer                                              |             |
-| **Side**    | [InputFieldIconSide](../enums/inputfieldiconside.md) |             |
+| **Side**    | [InputFieldIconSide](../enums/inputfieldiconside) |             |

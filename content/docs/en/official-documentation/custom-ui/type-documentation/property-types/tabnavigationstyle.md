@@ -8,8 +8,8 @@ title: TabNavigationStyle
 
 | Name                    | Type                                 | Description |
 | ----------------------- | ------------------------------------ | ----------- |
-| **TabStyle**            | [TabStyle](tabstyle.md)              |             |
-| **SelectedTabStyle**    | [TabStyle](tabstyle.md)              |             |
-| **SeparatorAnchor**     | [Anchor](anchor.md)                  |             |
-| **SeparatorBackground** | [PatchStyle](patchstyle.md) / String |             |
-| **TabSounds**           | [ButtonSounds](buttonsounds.md)      |             |
+| **TabStyle**            | [TabStyle](tabstyle)              |             |
+| **SelectedTabStyle**    | [TabStyle](tabstyle)              |             |
+| **SeparatorAnchor**     | [Anchor](anchor)                  |             |
+| **SeparatorBackground** | [PatchStyle](patchstyle) / String |             |
+| **TabSounds**           | [ButtonSounds](buttonsounds)      |             |

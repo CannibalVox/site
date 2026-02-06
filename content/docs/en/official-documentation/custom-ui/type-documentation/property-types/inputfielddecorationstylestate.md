@@ -9,8 +9,8 @@ title: InputFieldDecorationStyleState
 | Name                            | Type                                              | Description |
 | ------------------------------- | ------------------------------------------------- | ----------- |
 | **OutlineSize**                 | Integer                                           |             |
-| **Background**                  | [PatchStyle](patchstyle.md) / String              |             |
+| **Background**                  | [PatchStyle](patchstyle) / String              |             |
 | **OutlineColor**                | [Color](../../markup.md#colors)                   |             |
-| **Icon**                        | [InputFieldIcon](inputfieldicon.md)               |             |
-| **ClearButtonStyle**            | [InputFieldButtonStyle](inputfieldbuttonstyle.md) |             |
-| **ToggleVisibilityButtonStyle** | [InputFieldButtonStyle](inputfieldbuttonstyle.md) |             |
+| **Icon**                        | [InputFieldIcon](inputfieldicon)               |             |
+| **ClearButtonStyle**            | [InputFieldButtonStyle](inputfieldbuttonstyle) |             |
+| **ToggleVisibilityButtonStyle** | [InputFieldButtonStyle](inputfieldbuttonstyle) |             |

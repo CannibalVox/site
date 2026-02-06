@@ -8,11 +8,11 @@ title: ItemGridSlot
 
 | Name                          | Type                                  | Description |
 | ----------------------------- | ------------------------------------- | ----------- |
-| **ItemStack**                 | [ClientItemStack](clientitemstack.md) |             |
-| **Background**                | [PatchStyle](patchstyle.md) / String  |             |
-| **ExtraOverlays**             | List<[PatchStyle](patchstyle.md)>     |             |
-| **Overlay**                   | [PatchStyle](patchstyle.md) / String  |             |
-| **Icon**                      | [PatchStyle](patchstyle.md) / String  |             |
+| **ItemStack**                 | [ClientItemStack](clientitemstack) |             |
+| **Background**                | [PatchStyle](patchstyle) / String  |             |
+| **ExtraOverlays**             | List<[PatchStyle](patchstyle)>     |             |
+| **Overlay**                   | [PatchStyle](patchstyle) / String  |             |
+| **Icon**                      | [PatchStyle](patchstyle) / String  |             |
 | **IsItemIncompatible**        | Boolean                               |             |
 | **Name**                      | String                                |             |
 | **Description**               | String                                |             |

@@ -8,4 +8,4 @@ title: ToggleButtonStyleState
 
 | Name           | Type                                 | Description |
 | -------------- | ------------------------------------ | ----------- |
-| **Background** | [PatchStyle](patchstyle.md) / String |             |
+| **Background** | [PatchStyle](patchstyle) / String |             |

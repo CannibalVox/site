@@ -8,10 +8,10 @@ title: PopupStyle
 
 | Name                    | Type                                    | Description |
 | ----------------------- | --------------------------------------- | ----------- |
-| **Background**          | [PatchStyle](patchstyle.md) / String    |             |
-| **Padding**             | [Padding](padding.md)                   |             |
+| **Background**          | [PatchStyle](patchstyle) / String    |             |
+| **Padding**             | [Padding](padding)                   |             |
 | **Width**               | Integer                                 |             |
-| **ButtonPadding**       | [Padding](padding.md)                   |             |
-| **ButtonStyle**         | [SubMenuItemStyle](submenuitemstyle.md) |             |
-| **SelectedButtonStyle** | [SubMenuItemStyle](submenuitemstyle.md) |             |
-| **TooltipStyle**        | [TextTooltipStyle](texttooltipstyle.md) |             |
+| **ButtonPadding**       | [Padding](padding)                   |             |
+| **ButtonStyle**         | [SubMenuItemStyle](submenuitemstyle) |             |
+| **SelectedButtonStyle** | [SubMenuItemStyle](submenuitemstyle) |             |
+| **TooltipStyle**        | [TextTooltipStyle](texttooltipstyle) |             |

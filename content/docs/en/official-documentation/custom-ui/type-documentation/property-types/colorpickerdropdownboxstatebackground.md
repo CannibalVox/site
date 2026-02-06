@@ -8,6 +8,6 @@ title: ColorPickerDropdownBoxStateBackground
 
 | Name        | Type                                 | Description |
 | ----------- | ------------------------------------ | ----------- |
-| **Default** | [PatchStyle](patchstyle.md) / String |             |
-| **Hovered** | [PatchStyle](patchstyle.md) / String |             |
-| **Pressed** | [PatchStyle](patchstyle.md) / String |             |
+| **Default** | [PatchStyle](patchstyle) / String |             |
+| **Hovered** | [PatchStyle](patchstyle) / String |             |
+| **Pressed** | [PatchStyle](patchstyle) / String |             |

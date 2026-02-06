@@ -8,5 +8,5 @@ title: InputFieldDecorationStyle
 
 | Name        | Type                                                                | Description |
 | ----------- | ------------------------------------------------------------------- | ----------- |
-| **Default** | [InputFieldDecorationStyleState](inputfielddecorationstylestate.md) |             |
-| **Focused** | [InputFieldDecorationStyleState](inputfielddecorationstylestate.md) |             |
+| **Default** | [InputFieldDecorationStyleState](inputfielddecorationstylestate) |             |
+| **Focused** | [InputFieldDecorationStyleState](inputfielddecorationstylestate) |             |

@@ -8,9 +8,9 @@ title: SliderStyle
 
 | Name             | Type                                 | Description |
 | ---------------- | ------------------------------------ | ----------- |
-| **Background**   | [PatchStyle](patchstyle.md) / String |             |
-| **Fill**         | [PatchStyle](patchstyle.md) / String |             |
-| **Handle**       | [PatchStyle](patchstyle.md) / String |             |
+| **Background**   | [PatchStyle](patchstyle) / String |             |
+| **Fill**         | [PatchStyle](patchstyle) / String |             |
+| **Handle**       | [PatchStyle](patchstyle) / String |             |
 | **HandleWidth**  | Integer                              |             |
 | **HandleHeight** | Integer                              |             |
-| **Sounds**       | [ButtonSounds](buttonsounds.md)      |             |
+| **Sounds**       | [ButtonSounds](buttonsounds)      |             |

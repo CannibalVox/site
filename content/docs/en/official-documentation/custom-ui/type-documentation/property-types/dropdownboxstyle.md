@@ -8,10 +8,10 @@ title: DropdownBoxStyle
 
 | Name                            | Type                                                          | Description |
 | ------------------------------- | ------------------------------------------------------------- | ----------- |
-| **DefaultBackground**           | [PatchStyle](patchstyle.md) / String                          |             |
-| **HoveredBackground**           | [PatchStyle](patchstyle.md) / String                          |             |
-| **PressedBackground**           | [PatchStyle](patchstyle.md) / String                          |             |
-| **DisabledBackground**          | [PatchStyle](patchstyle.md) / String                          |             |
+| **DefaultBackground**           | [PatchStyle](patchstyle) / String                          |             |
+| **HoveredBackground**           | [PatchStyle](patchstyle) / String                          |             |
+| **PressedBackground**           | [PatchStyle](patchstyle) / String                          |             |
+| **DisabledBackground**          | [PatchStyle](patchstyle) / String                          |             |
 | **IconTexturePath**             | UI Path (String)                                              |             |
 | **IconWidth**                   | Integer                                                       |             |
 | **IconHeight**                  | Integer                                                       |             |
@@ -22,29 +22,29 @@ title: DropdownBoxStyle
 | **ArrowWidth**                  | Integer                                                       |             |
 | **ArrowHeight**                 | Integer                                                       |             |
 | **HorizontalPadding**           | Integer                                                       |             |
-| **LabelStyle**                  | [LabelStyle](labelstyle.md)                                   |             |
-| **DisabledLabelStyle**          | [LabelStyle](labelstyle.md)                                   |             |
-| **Sounds**                      | [DropdownBoxSounds](dropdownboxsounds.md)                     |             |
-| **PanelTitleLabelStyle**        | [LabelStyle](labelstyle.md)                                   |             |
+| **LabelStyle**                  | [LabelStyle](labelstyle)                                   |             |
+| **DisabledLabelStyle**          | [LabelStyle](labelstyle)                                   |             |
+| **Sounds**                      | [DropdownBoxSounds](dropdownboxsounds)                     |             |
+| **PanelTitleLabelStyle**        | [LabelStyle](labelstyle)                                   |             |
 | **EntryHeight**                 | Integer                                                       |             |
 | **EntriesInViewport**           | Integer                                                       |             |
 | **HorizontalEntryPadding**      | Integer                                                       |             |
 | **EntryIconHeight**             | Integer                                                       |             |
 | **EntryIconWidth**              | Integer                                                       |             |
-| **EntryIconBackground**         | [PatchStyle](patchstyle.md) / String                          |             |
-| **SelectedEntryIconBackground** | [PatchStyle](patchstyle.md) / String                          |             |
-| **EntryLabelStyle**             | [LabelStyle](labelstyle.md)                                   |             |
-| **SelectedEntryLabelStyle**     | [LabelStyle](labelstyle.md)                                   |             |
-| **NoItemsLabelStyle**           | [LabelStyle](labelstyle.md)                                   |             |
-| **HoveredEntryBackground**      | [PatchStyle](patchstyle.md) / String                          |             |
-| **PressedEntryBackground**      | [PatchStyle](patchstyle.md) / String                          |             |
+| **EntryIconBackground**         | [PatchStyle](patchstyle) / String                          |             |
+| **SelectedEntryIconBackground** | [PatchStyle](patchstyle) / String                          |             |
+| **EntryLabelStyle**             | [LabelStyle](labelstyle)                                   |             |
+| **SelectedEntryLabelStyle**     | [LabelStyle](labelstyle)                                   |             |
+| **NoItemsLabelStyle**           | [LabelStyle](labelstyle)                                   |             |
+| **HoveredEntryBackground**      | [PatchStyle](patchstyle) / String                          |             |
+| **PressedEntryBackground**      | [PatchStyle](patchstyle) / String                          |             |
 | **FocusOutlineSize**            | Integer                                                       |             |
 | **FocusOutlineColor**           | [Color](../../markup.md#colors)                               |             |
-| **EntrySounds**                 | [ButtonSounds](buttonsounds.md)                               |             |
-| **PanelScrollbarStyle**         | [ScrollbarStyle](scrollbarstyle.md)                           |             |
-| **PanelBackground**             | [PatchStyle](patchstyle.md) / String                          |             |
+| **EntrySounds**                 | [ButtonSounds](buttonsounds)                               |             |
+| **PanelScrollbarStyle**         | [ScrollbarStyle](scrollbarstyle)                           |             |
+| **PanelBackground**             | [PatchStyle](patchstyle) / String                          |             |
 | **PanelPadding**                | Integer                                                       |             |
-| **PanelAlign**                  | [DropdownBoxAlign](../enums/dropdownboxalign.md)              |             |
+| **PanelAlign**                  | [DropdownBoxAlign](../enums/dropdownboxalign)              |             |
 | **PanelOffset**                 | Integer                                                       |             |
 | **PanelWidth**                  | Integer                                                       |             |
-| **SearchInputStyle**            | [DropdownBoxSearchInputStyle](dropdownboxsearchinputstyle.md) |             |
+| **SearchInputStyle**            | [DropdownBoxSearchInputStyle](dropdownboxsearchinputstyle) |             |

@@ -11,7 +11,7 @@ title: ScrollbarStyle
 | **Size**                   | Integer                              |             |
 | **Spacing**                | Integer                              |             |
 | **OnlyVisibleWhenHovered** | Boolean                              |             |
-| **Background**             | [PatchStyle](patchstyle.md) / String |             |
-| **Handle**                 | [PatchStyle](patchstyle.md) / String |             |
-| **HoveredHandle**          | [PatchStyle](patchstyle.md) / String |             |
-| **DraggedHandle**          | [PatchStyle](patchstyle.md) / String |             |
+| **Background**             | [PatchStyle](patchstyle) / String |             |
+| **Handle**                 | [PatchStyle](patchstyle) / String |             |
+| **HoveredHandle**          | [PatchStyle](patchstyle) / String |             |
+| **DraggedHandle**          | [PatchStyle](patchstyle) / String |             |

@@ -8,5 +8,5 @@ title: CheckBoxStyle
 
 | Name          | Type                                        | Description |
 | ------------- | ------------------------------------------- | ----------- |
-| **Checked**   | [CheckBoxStyleState](checkboxstylestate.md) |             |
-| **Unchecked** | [CheckBoxStyleState](checkboxstylestate.md) |             |
+| **Checked**   | [CheckBoxStyleState](checkboxstylestate) |             |
+| **Unchecked** | [CheckBoxStyleState](checkboxstylestate) |             |

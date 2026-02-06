@@ -8,13 +8,13 @@ title: TabStyleState
 
 | Name                       | Type                                    | Description |
 | -------------------------- | --------------------------------------- | ----------- |
-| **Background**             | [PatchStyle](patchstyle.md) / String    |             |
-| **Overlay**                | [PatchStyle](patchstyle.md) / String    |             |
-| **Anchor**                 | [Anchor](anchor.md)                     |             |
-| **Padding**                | [Padding](padding.md)                   |             |
-| **IconAnchor**             | [Anchor](anchor.md)                     |             |
+| **Background**             | [PatchStyle](patchstyle) / String    |             |
+| **Overlay**                | [PatchStyle](patchstyle) / String    |             |
+| **Anchor**                 | [Anchor](anchor)                     |             |
+| **Padding**                | [Padding](padding)                   |             |
+| **IconAnchor**             | [Anchor](anchor)                     |             |
 | **IconOpacity**            | Float                                   |             |
-| **LabelStyle**             | [LabelStyle](labelstyle.md)             |             |
+| **LabelStyle**             | [LabelStyle](labelstyle)             |             |
 | **FlexWeight**             | Integer                                 |             |
 | **ContentMaskTexturePath** | UI Path (String)                        |             |
-| **TooltipStyle**           | [TextTooltipStyle](texttooltipstyle.md) |             |
+| **TooltipStyle**           | [TextTooltipStyle](texttooltipstyle) |             |

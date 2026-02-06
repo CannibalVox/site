@@ -8,11 +8,11 @@ title: DropdownBoxSearchInputStyle
 
 | Name                 | Type                                              | Description |
 | -------------------- | ------------------------------------------------- | ----------- |
-| **Background**       | [PatchStyle](patchstyle.md) / String              |             |
-| **Icon**             | [InputFieldIcon](inputfieldicon.md)               |             |
-| **Style**            | [InputFieldStyle](inputfieldstyle.md)             |             |
-| **PlaceholderStyle** | [InputFieldStyle](inputfieldstyle.md)             |             |
-| **Anchor**           | [Anchor](anchor.md)                               |             |
-| **Padding**          | [Padding](padding.md)                             |             |
+| **Background**       | [PatchStyle](patchstyle) / String              |             |
+| **Icon**             | [InputFieldIcon](inputfieldicon)               |             |
+| **Style**            | [InputFieldStyle](inputfieldstyle)             |             |
+| **PlaceholderStyle** | [InputFieldStyle](inputfieldstyle)             |             |
+| **Anchor**           | [Anchor](anchor)                               |             |
+| **Padding**          | [Padding](padding)                             |             |
 | **PlaceholderText**  | String                                            |             |
-| **ClearButtonStyle** | [InputFieldButtonStyle](inputfieldbuttonstyle.md) |             |
+| **ClearButtonStyle** | [InputFieldButtonStyle](inputfieldbuttonstyle) |             |

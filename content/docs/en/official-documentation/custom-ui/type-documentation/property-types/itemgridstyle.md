@@ -11,17 +11,17 @@ title: ItemGridStyle
 | **SlotSize**                    | Integer                              |             |
 | **SlotIconSize**                | Integer                              |             |
 | **SlotSpacing**                 | Integer                              |             |
-| **DurabilityBarBackground**     | [PatchStyle](patchstyle.md) / String |             |
+| **DurabilityBarBackground**     | [PatchStyle](patchstyle) / String |             |
 | **DurabilityBar**               | UI Path (String)                     |             |
-| **DurabilityBarAnchor**         | [Anchor](anchor.md)                  |             |
+| **DurabilityBarAnchor**         | [Anchor](anchor)                  |             |
 | **DurabilityBarColorStart**     | [Color](../../markup.md#colors)      |             |
 | **DurabilityBarColorEnd**       | [Color](../../markup.md#colors)      |             |
-| **CursedIconPatch**             | [PatchStyle](patchstyle.md) / String |             |
-| **CursedIconAnchor**            | [Anchor](anchor.md)                  |             |
-| **SlotBackground**              | [PatchStyle](patchstyle.md) / String |             |
-| **QuantityPopupSlotOverlay**    | [PatchStyle](patchstyle.md) / String |             |
-| **BrokenSlotBackgroundOverlay** | [PatchStyle](patchstyle.md) / String |             |
-| **BrokenSlotIconOverlay**       | [PatchStyle](patchstyle.md) / String |             |
-| **DefaultItemIcon**             | [PatchStyle](patchstyle.md) / String |             |
-| **ItemStackActivateSound**      | [SoundStyle](soundstyle.md)          |             |
-| **ItemStackHoveredSound**       | [SoundStyle](soundstyle.md)          |             |
+| **CursedIconPatch**             | [PatchStyle](patchstyle) / String |             |
+| **CursedIconAnchor**            | [Anchor](anchor)                  |             |
+| **SlotBackground**              | [PatchStyle](patchstyle) / String |             |
+| **QuantityPopupSlotOverlay**    | [PatchStyle](patchstyle) / String |             |
+| **BrokenSlotBackgroundOverlay** | [PatchStyle](patchstyle) / String |             |
+| **BrokenSlotIconOverlay**       | [PatchStyle](patchstyle) / String |             |
+| **DefaultItemIcon**             | [PatchStyle](patchstyle) / String |             |
+| **ItemStackActivateSound**      | [SoundStyle](soundstyle)          |             |
+| **ItemStackHoveredSound**       | [SoundStyle](soundstyle)          |             |

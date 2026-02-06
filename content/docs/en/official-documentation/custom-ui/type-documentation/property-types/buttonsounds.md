@@ -8,6 +8,6 @@ title: ButtonSounds
 
 | Name           | Type                        | Description |
 | -------------- | --------------------------- | ----------- |
-| **Activate**   | [SoundStyle](soundstyle.md) |             |
-| **Context**    | [SoundStyle](soundstyle.md) |             |
-| **MouseHover** | [SoundStyle](soundstyle.md) |             |
+| **Activate**   | [SoundStyle](soundstyle) |             |
+| **Context**    | [SoundStyle](soundstyle) |             |
+| **MouseHover** | [SoundStyle](soundstyle) |             |
