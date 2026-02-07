@@ -4,18 +4,18 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # PopupStyle
 
 ## Properties
 
-| Name                    | Type                                    | Description |
-| ----------------------- | --------------------------------------- | ----------- |
+| Name                    | Type                                 | Description |
+| ----------------------- | ------------------------------------ | ----------- |
 | **Background**          | [PatchStyle](patchstyle) / String    |             |
 | **Padding**             | [Padding](padding)                   |             |
-| **Width**               | Integer                                 |             |
+| **Width**               | Integer                              |             |
 | **ButtonPadding**       | [Padding](padding)                   |             |
 | **ButtonStyle**         | [SubMenuItemStyle](submenuitemstyle) |             |
 | **SelectedButtonStyle** | [SubMenuItemStyle](submenuitemstyle) |             |

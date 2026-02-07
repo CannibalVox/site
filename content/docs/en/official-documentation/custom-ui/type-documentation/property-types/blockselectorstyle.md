@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # BlockSelectorStyle
 
 ## Properties
 
-| Name                 | Type                                 | Description |
-| -------------------- | ------------------------------------ | ----------- |
+| Name                 | Type                              | Description |
+| -------------------- | --------------------------------- | ----------- |
 | **ItemGridStyle**    | [ItemGridStyle](itemgridstyle)    |             |
 | **SlotDropIcon**     | [PatchStyle](patchstyle) / String |             |
 | **SlotDeleteIcon**   | [PatchStyle](patchstyle) / String |             |

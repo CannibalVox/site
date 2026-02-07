@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # ColorPickerDropdownBoxStyle
 
 ## Properties
 
-| Name                 | Type                                                                              | Description |
-| -------------------- | --------------------------------------------------------------------------------- | ----------- |
+| Name                 | Type                                                                           | Description |
+| -------------------- | ------------------------------------------------------------------------------ | ----------- |
 | **Background**       | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground) |             |
 | **ColorPickerStyle** | [ColorPickerStyle](colorpickerstyle)                                           |             |
 | **Overlay**          | [ColorPickerDropdownBoxStateBackground](colorpickerdropdownboxstatebackground) |             |
@@ -20,7 +20,7 @@ authors:
 | **ArrowAnchor**      | [Anchor](anchor)                                                               |             |
 | **Sounds**           | [ButtonSounds](buttonsounds)                                                   |             |
 | **PanelBackground**  | [PatchStyle](patchstyle) / String                                              |             |
-| **PanelWidth**       | Integer                                                                           |             |
-| **PanelHeight**      | Integer                                                                           |             |
+| **PanelWidth**       | Integer                                                                        |             |
+| **PanelHeight**      | Integer                                                                        |             |
 | **PanelPadding**     | [Padding](padding)                                                             |             |
-| **PanelOffset**      | Integer                                                                           |             |
+| **PanelOffset**      | Integer                                                                        |             |

@@ -15,10 +15,10 @@ The layout system determines how UI elements are positioned and sized on screen.
 
 Every UI element has:
 
-* **Container Rectangle** - The space allocated by the parent
-* **Anchor** - How the element positions/sizes itself within the container
-* **Padding** - Inner spacing that affects child layout
-* **LayoutMode** - How the element arranges its children (if it's a container)
+- **Container Rectangle** - The space allocated by the parent
+- **Anchor** - How the element positions/sizes itself within the container
+- **Padding** - Inner spacing that affects child layout
+- **LayoutMode** - How the element arranges its children (if it's a container)
 
 ```
 ┌─────────────────────────────────────┐
@@ -57,10 +57,10 @@ Label {
 }
 ```
 
-* **Top**: 10 pixels from container's top edge
-* **Left**: 20 pixels from container's left edge
-* **Width**: 100 pixels wide
-* **Height**: 30 pixels tall
+- **Top**: 10 pixels from container's top edge
+- **Left**: 20 pixels from container's left edge
+- **Width**: 100 pixels wide
+- **Height**: 30 pixels tall
 
 ### Anchoring to Edges
 
@@ -98,10 +98,10 @@ Panel {
 }
 ```
 
-* Fixed width of 300 pixels
-* Stretches vertically between top and bottom edges
-* 10 pixels from top and bottom
-* 20 pixels from left
+- Fixed width of 300 pixels
+- Stretches vertically between top and bottom edges
+- 10 pixels from top and bottom
+- 20 pixels from left
 
 ## Padding
 
@@ -325,7 +325,7 @@ Children stack horizontally from left to right, centered both horizontally and v
 └────────────────────────────────────────────┘
 ```
 
-***
+---
 
 ### MiddleCenter (Vertical Stack, Fully Centered)
 
@@ -355,7 +355,7 @@ Children stack vertically from top to bottom, centered both horizontally and ver
 └────────────────────────────────────────────┘
 ```
 
-***
+---
 
 ### Full
 
@@ -455,9 +455,9 @@ Group {
 
 Result:
 
-* First button: 100px
-* Middle group: 200px (400 - 100 - 100 = 200)
-* Last button: 100px
+- First button: 100px
+- Middle group: 200px (400 - 100 - 100 = 200)
+- Last button: 100px
 
 ### Multiple FlexWeights
 
@@ -474,9 +474,9 @@ Group {
 
 Remaining space (600px) is split:
 
-* First group: 600 × (1/4) = 150px
-* Second group: 600 × (2/4) = 300px
-* Third group: 600 × (1/4) = 150px
+- First group: 600 × (1/4) = 150px
+- Second group: 600 × (2/4) = 300px
+- Third group: 600 × (1/4) = 150px
 
 ## Visibility
 
@@ -488,6 +488,5 @@ Button #HiddenButton {
 
 **Effect:**
 
-* Element and its children are not displayed
-* Element is **not included in layout** (doesn't take up space)
-
+- Element and its children are not displayed
+- Element is **not included in layout** (doesn't take up space)

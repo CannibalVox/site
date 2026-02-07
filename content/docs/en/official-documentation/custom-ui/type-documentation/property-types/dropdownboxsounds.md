@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # DropdownBoxSounds
 
 ## Properties
 
-| Name           | Type                        | Description |
-| -------------- | --------------------------- | ----------- |
+| Name           | Type                     | Description |
+| -------------- | ------------------------ | ----------- |
 | **Activate**   | [SoundStyle](soundstyle) |             |
 | **MouseHover** | [SoundStyle](soundstyle) |             |
 | **Close**      | [SoundStyle](soundstyle) |             |

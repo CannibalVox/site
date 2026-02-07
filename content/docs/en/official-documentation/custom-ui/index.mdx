@@ -16,11 +16,11 @@ Custom UI is Hytale's framework for creating **custom user interfaces** controll
 
 As a modder, Custom UI gives you the power to:
 
-* **Create custom interactive pages** - Shop interfaces, quest dialogs, server settings menus, admin panels
-* **Add custom HUD overlays** - Quest trackers, status displays, custom health bars, server information
-* **Design with markup** - Use `.ui` files to define reusable UI templates
-* **Handle user interactions** - Respond to button clicks, form submissions, and other events
-* **Localize your UI** - Support multiple languages using the game's translation system
+- **Create custom interactive pages** - Shop interfaces, quest dialogs, server settings menus, admin panels
+- **Add custom HUD overlays** - Quest trackers, status displays, custom health bars, server information
+- **Design with markup** - Use `.ui` files to define reusable UI templates
+- **Handle user interactions** - Respond to button clicks, form submissions, and other events
+- **Localize your UI** - Support multiple languages using the game's translation system
 
 ## How Custom UI Fits Into Hytale's UI
 
@@ -30,11 +30,11 @@ Hytale's user interface is divided into two main categories:
 
 Built-in interfaces controlled by the C# game client:
 
-* Main menu and settings
-* Character creation
-* Built-in HUD (health, hotbar, chat)
-* Inventory and crafting screens
-* Development tools
+- Main menu and settings
+- Character creation
+- Built-in HUD (health, hotbar, chat)
+- Inventory and crafting screens
+- Development tools
 
 **You cannot modify these** - they are part of the core game client.
 
@@ -46,19 +46,19 @@ Server-controlled interfaces that you can create and customize:
 
 Full-screen interactive overlays that appear during gameplay:
 
-* Can be dismissed by the player (ESC key)
-* Capture all input (keyboard and mouse)
-* Support loading states while waiting for server responses
-* Perfect for: shops, dialogs, menus, configuration screens
+- Can be dismissed by the player (ESC key)
+- Capture all input (keyboard and mouse)
+- Support loading states while waiting for server responses
+- Perfect for: shops, dialogs, menus, configuration screens
 
 #### Custom HUDs
 
 Persistent overlay elements drawn on top of the game world:
 
-* Display-only (no user interaction)
-* Always visible during gameplay
-* Lightweight and non-intrusive
-* Perfect for: quest objectives, status indicators, server info panels
+- Display-only (no user interaction)
+- Always visible during gameplay
+- Lightweight and non-intrusive
+- Perfect for: quest objectives, status indicators, server info panels
 
 ## Architecture Overview
 
@@ -99,17 +99,17 @@ Server UI uses a **command-based architecture**:
 
 You don't create UI objects directly. Instead, you send **commands** that describe what you want:
 
-* "Append this button template to that container"
-* "Set this label's text to 'Hello World'"
-* "Clear all children from this list"
+- "Append this button template to that container"
+- "Set this label's text to 'Hello World'"
+- "Clear all children from this list"
 
 ### Asset-Driven
 
 UI structure is defined in `.ui` markup files (assets), not hardcoded in Java. This enables:
 
-* Designers to modify layouts without touching code
-* Reusable UI components
-* Consistent visual language
+- Designers to modify layouts without touching code
+- Reusable UI components
+- Consistent visual language
 
 ### Event-Driven
 
@@ -119,10 +119,7 @@ User interactions trigger events that flow back to your server code. You registe
 
 You target specific UI elements using **selectors:**
 
-* `#MyButton` - Element with ID "MyButton"
-* `#List[0]` - First child of element "List"
-* `#List[0] #Title` - Element with ID "Title" in the first child of element "List"
-* `#Label.TextColor` - The TextColor property of element "Label"
-
-
-
+- `#MyButton` - Element with ID "MyButton"
+- `#List[0]` - First child of element "List"
+- `#List[0] #Title` - Element with ID "Title" in the first child of element "List"
+- `#Label.TextColor` - The TextColor property of element "Label"

@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # TextButtonStyle
 
 ## Properties
 
-| Name         | Type                                            | Description |
-| ------------ | ----------------------------------------------- | ----------- |
+| Name         | Type                                         | Description |
+| ------------ | -------------------------------------------- | ----------- |
 | **Default**  | [TextButtonStyleState](textbuttonstylestate) |             |
 | **Hovered**  | [TextButtonStyleState](textbuttonstylestate) |             |
 | **Pressed**  | [TextButtonStyleState](textbuttonstylestate) |             |

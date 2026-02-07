@@ -117,7 +117,7 @@ Group #Rows {
 
   @Row #MySecondRow {
     @LabelText = "Second row";
-  } 
+  }
 }
 ```
 
@@ -125,24 +125,24 @@ Group #Rows {
 
 #### Basic Types
 
-* **Boolean**
-  * `Visible: false;`
-  * `Visible: true;`
-* **Int**
-  * `Height: 20;`
-* **Float, Double, Decimal**
-  * `Min: 0.2;`
-* **String**
-  * `Text: "Hi!";`
-* **Char**
-  * `PasswordChar: "*";`
-  * _Note: The syntax is the same as a string, however a value of this type cannot contain more than one character!_
-* **Color**
-  * `Background: #ffffff;`&#x20;
-* **Objects**
-  * `Style: (Background: #ffffff)`
-* **Array**&#x20;
-  * `TextSpans: [(Text: "Hi", IsBold: true)]`
+- **Boolean**
+  - `Visible: false;`
+  - `Visible: true;`
+- **Int**
+  - `Height: 20;`
+- **Float, Double, Decimal**
+  - `Min: 0.2;`
+- **String**
+  - `Text: "Hi!";`
+- **Char**
+  - `PasswordChar: "*";`
+  - _Note: The syntax is the same as a string, however a value of this type cannot contain more than one character!_
+- **Color**
+  - `Background: #ffffff;`&#x20;
+- **Objects**
+  - `Style: (Background: #ffffff)`
+- **Array**&#x20;
+  - `TextSpans: [(Text: "Hi", IsBold: true)]`
 
 #### Translations
 
@@ -160,9 +160,9 @@ Label {
 
 A color literal can be written as follows:
 
-* `#rrggbb`: 6-digit hexadecimal representation for red, green, blue (fully opaque)
-* `#rrggbb(a.a)`: 6-digit hexadecimal representation for red, green, blue with alpha between 0 and 1
-* `#rrggbbaa`: 8-digit hexadecimal representation for red, green, blue and alpha
+- `#rrggbb`: 6-digit hexadecimal representation for red, green, blue (fully opaque)
+- `#rrggbb(a.a)`: 6-digit hexadecimal representation for red, green, blue with alpha between 0 and 1
+- `#rrggbbaa`: 8-digit hexadecimal representation for red, green, blue and alpha
 
 ```
 Group {
@@ -171,7 +171,8 @@ Group {
 ```
 
 <Callout>
-The `#rrggbb(a.a)` format is prefered over the `#rrggbbaa` format for readability reasons.
+  The `#rrggbb(a.a)` format is prefered over the `#rrggbbaa` format for
+  readability reasons.
 </Callout>
 
 #### Font Name
@@ -187,9 +188,9 @@ Label {
 
 **Available Font Names**
 
-* _Default_ - This is the default font that is used for most text and is always used unless a different option has been specified
-* _Secondary_ - This font is mostly used for headlines or elements that are supposed to stick out
-* _Mono_ - This is only used for development; For things such as profiling or error overlays.
+- _Default_ - This is the default font that is used for most text and is always used unless a different option has been specified
+- _Secondary_ - This font is mostly used for headlines or elements that are supposed to stick out
+- _Mono_ - This is only used for development; For things such as profiling or error overlays.
 
 #### Path
 
@@ -213,14 +214,12 @@ Objects contain a set of properties. In this example we are assigning an Anchor 
 Group {
   Anchor: (
    Height: 10,
-   Width: 20 
+   Width: 20
  );
 }
 ```
 
 You can find all objects that can be used in markup [here](type-documentation#elements).
-
-
 
 ## Visual Studio Code Extension
 

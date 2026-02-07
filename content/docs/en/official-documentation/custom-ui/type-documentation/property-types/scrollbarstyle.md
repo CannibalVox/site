@@ -4,18 +4,18 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # ScrollbarStyle
 
 ## Properties
 
-| Name                       | Type                                 | Description |
-| -------------------------- | ------------------------------------ | ----------- |
-| **Size**                   | Integer                              |             |
-| **Spacing**                | Integer                              |             |
-| **OnlyVisibleWhenHovered** | Boolean                              |             |
+| Name                       | Type                              | Description |
+| -------------------------- | --------------------------------- | ----------- |
+| **Size**                   | Integer                           |             |
+| **Spacing**                | Integer                           |             |
+| **OnlyVisibleWhenHovered** | Boolean                           |             |
 | **Background**             | [PatchStyle](patchstyle) / String |             |
 | **Handle**                 | [PatchStyle](patchstyle) / String |             |
 | **HoveredHandle**          | [PatchStyle](patchstyle) / String |             |

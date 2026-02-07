@@ -4,14 +4,14 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # InputFieldDecorationStyle
 
 ## Properties
 
-| Name        | Type                                                                | Description |
-| ----------- | ------------------------------------------------------------------- | ----------- |
+| Name        | Type                                                             | Description |
+| ----------- | ---------------------------------------------------------------- | ----------- |
 | **Default** | [InputFieldDecorationStyleState](inputfielddecorationstylestate) |             |
 | **Focused** | [InputFieldDecorationStyleState](inputfielddecorationstylestate) |             |

@@ -4,14 +4,14 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # LabeledCheckBoxStyle
 
 ## Properties
 
-| Name          | Type                                                      | Description |
-| ------------- | --------------------------------------------------------- | ----------- |
+| Name          | Type                                                   | Description |
+| ------------- | ------------------------------------------------------ | ----------- |
 | **Checked**   | [LabeledCheckBoxStyleState](labeledcheckboxstylestate) |             |
 | **Unchecked** | [LabeledCheckBoxStyleState](labeledcheckboxstylestate) |             |

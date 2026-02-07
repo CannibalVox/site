@@ -4,23 +4,23 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # ItemGridStyle
 
 ## Properties
 
-| Name                            | Type                                 | Description |
-| ------------------------------- | ------------------------------------ | ----------- |
-| **SlotSize**                    | Integer                              |             |
-| **SlotIconSize**                | Integer                              |             |
-| **SlotSpacing**                 | Integer                              |             |
+| Name                            | Type                              | Description |
+| ------------------------------- | --------------------------------- | ----------- |
+| **SlotSize**                    | Integer                           |             |
+| **SlotIconSize**                | Integer                           |             |
+| **SlotSpacing**                 | Integer                           |             |
 | **DurabilityBarBackground**     | [PatchStyle](patchstyle) / String |             |
-| **DurabilityBar**               | UI Path (String)                     |             |
+| **DurabilityBar**               | UI Path (String)                  |             |
 | **DurabilityBarAnchor**         | [Anchor](anchor)                  |             |
-| **DurabilityBarColorStart**     | [Color](../../markup.md#colors)      |             |
-| **DurabilityBarColorEnd**       | [Color](../../markup.md#colors)      |             |
+| **DurabilityBarColorStart**     | [Color](../../markup.md#colors)   |             |
+| **DurabilityBarColorEnd**       | [Color](../../markup.md#colors)   |             |
 | **CursedIconPatch**             | [PatchStyle](patchstyle) / String |             |
 | **CursedIconAnchor**            | [Anchor](anchor)                  |             |
 | **SlotBackground**              | [PatchStyle](patchstyle) / String |             |

@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # TabNavigationStyle
 
 ## Properties
 
-| Name                    | Type                                 | Description |
-| ----------------------- | ------------------------------------ | ----------- |
+| Name                    | Type                              | Description |
+| ----------------------- | --------------------------------- | ----------- |
 | **TabStyle**            | [TabStyle](tabstyle)              |             |
 | **SelectedTabStyle**    | [TabStyle](tabstyle)              |             |
 | **SeparatorAnchor**     | [Anchor](anchor)                  |             |

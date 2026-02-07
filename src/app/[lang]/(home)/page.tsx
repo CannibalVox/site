@@ -321,8 +321,8 @@ export default function HomePage() {
                     href={"https://hytalemodjam.com"}
                     className="flex items-center justify-center gap-2 text-wrap"
                   >
-                    We hosted the first Hytale Modjam with $5,000 in
-                    prizes! <ArrowRightIcon className="h4 w-4" />
+                    We hosted the first Hytale Modjam with $5,000 in prizes!{" "}
+                    <ArrowRightIcon className="h4 w-4" />
                   </Link>
                 </div>
               </div>

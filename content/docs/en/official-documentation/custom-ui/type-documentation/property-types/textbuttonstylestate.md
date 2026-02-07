@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # TextButtonStyleState
 
 ## Properties
 
-| Name                     | Type                                 | Description |
-| ------------------------ | ------------------------------------ | ----------- |
+| Name                     | Type                              | Description |
+| ------------------------ | --------------------------------- | ----------- |
 | **Background**           | [PatchStyle](patchstyle) / String |             |
 | **LabelStyle**           | [LabelStyle](labelstyle)          |             |
-| **LabelMaskTexturePath** | UI Path (String)                     |             |
+| **LabelMaskTexturePath** | UI Path (String)                  |             |

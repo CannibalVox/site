@@ -4,15 +4,15 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # ToggleButtonStyle
 
 ## Properties
 
-| Name         | Type                                                | Description |
-| ------------ | --------------------------------------------------- | ----------- |
+| Name         | Type                                             | Description |
+| ------------ | ------------------------------------------------ | ----------- |
 | **Default**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |
 | **Hovered**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |
 | **Pressed**  | [ToggleButtonStyleState](togglebuttonstylestate) |             |

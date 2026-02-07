@@ -4,16 +4,16 @@ authors:
   - name: "Hypixel Studios Canada Inc."
     url: "https://hytale.com"
 ---
-<OfficialDocumentationNotice />
 
+<OfficialDocumentationNotice />
 
 # SubMenuItemStyleState
 
 ## Properties
 
-| Name                     | Type                                 | Description |
-| ------------------------ | ------------------------------------ | ----------- |
+| Name                     | Type                              | Description |
+| ------------------------ | --------------------------------- | ----------- |
 | **Background**           | [PatchStyle](patchstyle) / String |             |
 | **LabelStyle**           | [LabelStyle](labelstyle)          |             |
 | **BindingLabelStyle**    | [LabelStyle](labelstyle)          |             |
-| **LabelMaskTexturePath** | UI Path (String)                     |             |
+| **LabelMaskTexturePath** | UI Path (String)                  |             |
