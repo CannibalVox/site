@@ -308,16 +308,197 @@ This interaction has a field `Interactions` which is a list of Interaction asset
 
 ## Blocks
 
+These are interaction types meant to reason about and modify blocks in the world.  The most important concept unique
+ to these interactions is the Block Target.  Like the Entity Target, it is mutable and can come from many places. 
+ However, for interaction chains initiated by the client, the block target will initially be the block that the player's cursor was 
+ over, if any.
+
+Additionally, for interaction chains initiated by the client, the client will send along which face of the block is targeted,
+ which is used by a few block-related interactions.
+ It is left up to each interaction type that cares about block faces as to how to handle this behavior for simulated input 
+ (i.e. NPCs initiating chains that are normally initated by the client).  At the time of this writing, all block-related 
+ interactions choose the top face where relevant in simulated input.
+
 ### BlockCondition 
+
+This interaction has a field `Matchers` which specifies certain conditions, such as block type, state, etc.  This 
+ interaction fails if the current target block does not match all of them.
+
+**BlockCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Matchers | `Array`<br />(Element Type: `BlockMatcher`) | **Yes** | A list of conditions that the target block must match or this condition will fail.<br />**Note: This field is technically not required but there is a bug that makes it dangerous to not provide at the time of this writing.**<br />**Note: If no conditions are added to this array, the interaction will fail, counterintuitively.** |
+
+**BlockMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Block | `BlockIdMatcher` | **No** | If provided, requires the block itself match some set of conditions. |
+| Face | `BlockFace` | **No** | If provided and not 'None', requires a specific block face be targeted. |
+| StaticFace | `Boolean` (Default: false) | **No** | If false, the face condition will be adjusted by the block's current rotation. |
+
+**BlockFace Values**
+- `Up`
+- `Down`
+- `North`
+- `South`
+- `East`
+- `West`
+- `None`
+
+**BlockIdMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------| 
+| Id | `Asset`<br />(Asset Type: `BlockType`) | **No** | If provided, the block must match the specified `BlockType`. |
+| State | `String` | **No** | If provided, the block's current state must match the provided state name. |
+| Tag | `String` | **No** | If provided, the block type's asset tags must contain the provided tag. |
+
+
 ### DestroyCondition 
+
+This interaction fails if the current User entity cannot destroy the current target blcok.
+
+**DestroyCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
 ### PlacementCountCondition
+
+This interaction accepts the name of a BlockType that has the TrackedPlacement BlockEntity. The interaction will fail if the number of 
+ blocks of the provided BlockType in the world do not match the provided condition.
+
+**PlacementCountCondition Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Block | `String` | **Yes** | The BlockType to examine. The number of instances of the BlockType in the world will be compared to Value.<br />**Note: The specified BlockType must have the TrackedPlacement BlockEntity. Otherwise, the number of blocks in the world will always be zero.** |
+| Value | `Integer`<br />(Default: 0) | **No** | The value to compare the number of blocks in the world with. |
+| LessThan | `Boolean<br />(Default: true) | **No** | If true, the interaction will fail if the number of blocks in the world is greater than or equal to Value. If false, the interaction will fail if the number of blocks in the world is less than or equal to Value. |
+
+
 ### BreakBlock
+
+This interaction attempts to break the target block while acting as the User entity. The User entity must be a player. It 
+ is not guaranteed to work, depending on world settings and the User entity's current state, it may not work.  If it 
+  fails, it will fail the interaction under some circumstances, but not others. 
+
+**Note: In particular, if `Harvest`=false and the player is in Survival mode, the player will simply execute a damage operation 
+ against the block. Even when the Tool field is specified, the player's currently-held item can impact the results in unintuitive 
+ ways.**
+
+This interaction will fail if there is no block target, if `Harvest`=true and the 
+  block is not harvestable, or if the world settings prevent the Harvest/Break operation.
+  It will generally not fail otherwise, even if the block was not broken or damaged.
+  The block will generally break every time if `Harvest`=true or the player is in 
+  Creative mode.
+
+
+**BreakBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Harvest | `Boolean` (Default: false) | **No** | If true, harvest the block and deposit the drops in the player's inventory. This operation will generally always succeed.  If false, this interaction will effectively perform whatever action would have occurred if the player had left-clicked the block. |
+| Tool | `String` | **No** | If `Harvest`=true, the player is in Survival mode, and this field is provided, then the break operation will be performed as though with this tool type.<br />**This field mostly doesn't work.  Your held item will be used for most block damage calculations regardless of this field's contents.** |
+| MatchTool | `Boolean` (Default: false) | **No** | If true, `Harvest`=true, the player is in Survival mode, and `Tool` is provided, block breaking will be prevented unless `Tool` is a valid gathering tool for the target block. The interaction will not be failed, even if block breaking is prevented in this manner. |
+
+
 ### ChangeBlock 
+
+This interaction requires a mapping from one or more current BlockTypes to one or more target BlockTypes.  If the 
+  target block is one of the key BlockTypes, then it will be changed to the mapped target BlockType.  If the current 
+  BlockType of the target block does not appear as a key in the Changes field, then this interaction fails.
+
+**ChangeBlock Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Changes | `Map`<br />(Key Type: `BlockType`, Value Type: `BlockType`) | **No** | A list of potential block type changes, with each entry having a current and new BlockType id. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | If provided, this SoundEvent is played in the world at the position of the block if the block successfully changes. |
+| RequireNotBroken | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail if the player's held item is broken (durability 0), and the block change will not take place. |
+
+
 ### ChangeState 
+
+This interaction requires a mapping from one or more current block state names to one or more state names. If the 
+  target block is in one of the key block states, then it will be changed to the mapped target blocks tate. If the 
+  current block state of the target block does nto appear as a key in the Changes field, then this interaction fails.
+
+All blocks start out with a null state by default.  This null state can be referenced by the key "default" and the block 
+  can be returned to that state with the value "default".
+
+**ChangeState Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+| Changes | `Map`<br />(Key Type: `String`, Value Type: `String`) | **No** | A list of potential block state changes, with each entry having a current and new state name. |
+| UpdateBlockState | `Boolean`<br />(Default: false) | **No** | If true, performs a full refresh of the block's BlockEntity component and notifies nearby players as though a full block type change occurred. |
+
+
 ### CycleBlockGroup
+
+This interaction will attempt to change the target block to the next block type in one of the BlockGroups it belongs to.
+  If the block type belongs to multiple BlockGroups, which one is used is effectively arbitrary. The User entity must be 
+  a player. If the block cannot be changed for any reason (entity not a player, no block target, block does not belong 
+  to a BlockGroup, etc.). If the block is the only entry in the BlockGroup, this interaction will succeed and the block 
+  will be considered changed despite nothing happening.  Unlike most other block-changing interactions, this one will 
+  fail if the world settings prevent players from breaking blocks.
+
+**This interaction always reduces the player's held item's durability by a single 'hit' worth of damage if the block
+  changes. There is no way to prevent it. The block type will change and the interaction will succeed even if the player's
+  held item is broken, however.**
+
+**CycleBlockGroup Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
 ### DestroyBlock
+
+This interaction destroys the target block without dropping anything.  It will successfully destroy the block if the 
+  target block exists and this interaction has no failure conditions. This interaction has no additional fields.
+
+
 ### PickBlock
+
+This interaction is effectively equivalent to using the middle mouse button in creative mode. In survival mode, the
+  block's item will be moved to the user's current active hotbar slot if it is in the player's inventory.  This 
+  interaction is performed entirely on the client and cannot be performed by non-players.  It is unclear if this 
+  interaction has failure conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
+
+
 ### PlaceBlock
+
+This interaction is effectively identical to a right clicking while holding a block in their hand, with some 
+  additional options. For one, it can be executed with any LivingEntity as the User entity. For another, it has some 
+  useful fields.  For the most part, though, it follows the same behaviors and rules as any ordinary block placement 
+  by a player.
+
+It's not clear under what circumstances this interaction can fail. The server will not fail the interaction under any 
+  special circumstances (including when there is no target block, or when `BlockTypeToPlace` is not provided and the 
+  LivingEntity is not holding a block). However, the client is very involved with the function of this interaction and 
+  its behavior is unknown.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| BlockTypeToPlace | `Asset`<br />(Asset Type: `BlockType`) | **No** | If provided, the block placed by this interaction will be the specified BlockType. If not provided, the User entity's held item will be used, instead, if it is a block. |
+| RemoveItemInHand | `Boolean`<br />(Default: True) | **No** | If true and the User entity is not a player in Creative mode, the item in the player's hand must match the block being placed and one quantity will be removed for each block placed. If the item does not match, the block cannot be placed.  If false, the player's hand item is ignored entirely.** |
+| AllowDragPlacement | `Boolean`<br />(Default: True) | **No** | If true and the interaction was triggered on the client by a player, then the player can hold the input that was used to activate this interaction chain and move the mouse around in order to execute this interaction repeatedly and place several blocks. The interaction chain will not move onto the next interaction until the player releases the input. |
+
 
 ## Items 
 
