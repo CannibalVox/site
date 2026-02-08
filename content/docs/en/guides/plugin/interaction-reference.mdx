@@ -506,6 +506,17 @@ It's not clear under what circumstances this interaction can fail. The server wi
 | AllowDragPlacement | `Boolean`<br />(Default: True) | **No** | If true and the interaction was triggered on the client by a player, then the player can hold the input that was used to activate this interaction chain and move the mouse around in order to execute this interaction repeatedly and place several blocks. The interaction chain will not move onto the next interaction until the player releases the input. |
 
 
+### UseBlock
+
+If the target block has an interaction for this interaction chain's interaction type, execute it immediately as part of 
+  this interaction chain. The execution will be wrapped in UseBlockEvent.Pre and UseBlockEvent.Post events, and cancellations 
+  of the UserBlockEvent.Pre event are respected. The User entity is considered the triggering entity for both events.
+
+If the target block does not have an interaction for this interaction chain's interaction type, this interaction fails.
+
+**This interaction has no additional fields.**
+
+
 ## Items 
 
 These are interactions intended to interface with an entity's inventory. There is no concept of an "item target", 
@@ -529,6 +540,15 @@ Adds a specified quantity of a specified item to the User entity's inventory, pr
 | ItemId | `Asset`<br />(Asset Type: `Item`) | **Yes** | The item id of the item to add to the player's inventory. |
 | Quantity | `Integer`<br />(Default: 0) | **No** | The quantity of the item to add to the player's inventory. |
 
+
+### EquipItem
+
+This interaction will equip the User entity's currently-held item into the appropriate armor slot, if it is armor. The 
+  interaction will fail if the item is armor but it cannot be equipped for some reason. The interaction will succeed but 
+  take no action if the User entity cannot equip armor or if the item is not armor.
+
+**This interaction has no additional fields.**
+  
 
 ### PickupItem
 
@@ -653,21 +673,24 @@ By default, every RootInteraction has a cooldown timer that is keyed to the Root
   will launch a cooldown of 0.35 seconds when activated by client input.  Otherwise, no cooldown will be activated.  However,
   by configuring your RootInteraction, you can change the key for the cooldown (so that multiple RootInteractions can share 
   a single cooldown), set the cooldown timer to whatever you like, and configure multiple charges that can build up over time
-  to allow the entity to activate the RootInteraction multiple times before encountering a cooldown timer. 
+  to allow the entity to activate the RootInteraction multiple times before being forced to pause.
 
 One important concept to keep in mind is the difference between **cooldown** and **charge time**.  The cooldown, if any,
   is activated each time a RootInteraction triggers, even if the player has more available charges. If the RootInteraction 
   is configured to use charges, then they will gradually build up over time. In order for a RootInteraction to be activated,
-  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if the ability has been 
+  the cooldown (if any) must be expired, and the RootInteraction must have at least one charge (if it has been 
   configured to use charges). 
 
 Bear in mind that the entire Cooldown configuration is shared between different RootInteractions with the same cooldown id.
-  If you use an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
+  If you activate an ability with 5 charges and a short cooldown and then another ability with a much longer cooldown and no 
   charges, the second ability will use the cooldown properties of the first ability until/unless the first ability finishes 
   charging and is cleared from the system.  You should generally only have multiple RootInteractions share a cooldown id 
   if they have the same configuration.
 
-The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system.
+The interactions below interact with the cooldown system to allow you to manipulate cooldowns via the interaction system. By 
+  using these interactions, you can have several interaction chains with different cooldown configurations share cooldowns 
+  that are checked and activated as part of the interaction chain itself, or have some components of an interaction change 
+  use a second cooldown separate from the main one.
 
 ### CooldownCondition
 
@@ -726,10 +749,76 @@ This interaction will trigger a cooldown on the User entity with a specified con
 
 ## Combo Chains 
 
-### CancelChain 
-### ChainFlag 
+Hytale additionally comes with a rich "combo chaining" system, which allows several inputs in a row to result in different 
+  attacks and special moves.  Rather than being attached to the RootInteraction like the cooldown system, these are 
+  primarily driven by the `Chaining` interaction.
+
+
 ### Chaining 
 
+This interaction does not inherit from SimpleInteraction and therefore has no Failed field. Its Next field works differently
+  from most interaction types.
+
+Chaining is a type of flow control interaction- each time a Chaining interaction with the same `ChainId` is called, a single 
+  interaction in the `Next` list is chosen and the others are ignored. The first time the `ChainId` is used, the first 
+  interaction in the list is chosen, the next time the second, etc. Once the end of the list is reached, the first 
+  interaction will be chosen again.
+
+Bear in mind: the progress through the Next list is based on the **ChainId**, not the interaction!  That means that two 
+  different Chaining interactions can share a single combo chain. You could have a pair of daggers that attacks with 
+  the left when the left mouse button is clicked and with the right when the right mouse button is clicked.  You could give 
+  both interaction chains a Chaining interaction with the same `ChainId` and three `Next` entries that do a light-light-heavy 
+  combo.  Each specific hit would occur with either the left or the right knife based on which button you clicked, but 
+  the combo would be otherwise identical regardless of which you chose. 
+
+The Chaining interaction also has a concept called "flags".  It is possible to attach named flags to a `ChainId` by using 
+  the ChainFlag interaction.  Then, you specify the flag name in Chaining's `Flags` field. If a Flag is active when the 
+  Chaining interaction is run, the Flag's interaction will be run instead of the appropriate interaction in `Next`.
+  Bear in mind: the entity's progress through the `Next` list still advances, the resulting `Next` interaction is just not 
+  run.  Only one flag can be active at a time.
+
+Lastly, it is possible to cancel the entity's progress through the combo chain and reset them to the first interaction in 
+  the list. This can be done with the CancelChain interaction, but it will also happen automatically if the player does 
+  not trigger an interaction with the ChainId for the specified ChainingAllowance.  When either of these happen, all flags will be 
+  canceled as well.
+
+All of these effects are triggered on the User entity only. Non-players can use the chaining system, but Flags do not currently
+  work for non-players.  This interaction has no special failure conditions.
+
+**Chaining Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **No** | If provided, acts as a key that multiple Chaining interactions can use to share combo chain progress and flags. If not provided, a unique ChainId will be generated for this interaction. | 
+| ChainingAllowance | `Double`<br />(Default: 0.0) | **No** | If, at the time this interaction is triggered, it has been this long in seconds since the last time a Chaining interaction with the same ChainId was executed, all state for this ChainId will be cleared before execution. |
+| Next | `AssetArray`<br />(Element Type: `Interaction`) | **Yes** | A list of interactions to cycle between each time this interaction is run. |
+| Flags | `Map`<br />(Key Type: `String`, Value Type: `Interaction`) | **No** | A map of flag names to interactions to run if the flag is active when this interaction executes. |
+
+
+### CancelChain 
+
+This interaction resets all progress and flag data on the User entity for the provided `ChainId`.  The next time a Chaining 
+  interaction is called for the provided `ChainId`, it will begin at the first interaction in the `Next` list. This
+  interaction has no special failure conditions.
+
+**CancelChain Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId whose data should be reset. |
+
+
+### ChainFlag 
+
+This interaction activates a flag on the User entity for the provided `ChainId`, which can be used to change behavior the 
+  next time a Chaining interaction with this `ChainId` is run. This will overwrite any flag that has 
+  already been raised. This interaction will have no effect for non-players. This interaction has no special failure 
+  conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ChainId | `String` | **Yes** | A ChainId on whom the flag should be raised. |
+| Flag | `String` | **Yes** | The name of the flag to raise. |
 
 
 ApplyForce 
@@ -747,11 +836,9 @@ CheckUniqueItemUsage
 ContextualUseNPC 
 DamageEntity 
 Door
-EquipItem
 ExitInstance
 Explode 
 FertilizeSoil
-
 HarvestCrop
 HubPortal
 IncreaseBackpackCapacity
@@ -759,7 +846,6 @@ LaunchPad
 LaunchProjectile
 LearnRecipe
 MemoriesCondition
-
 Mount 
 MovementCondition
 OpenBenchPage
@@ -769,7 +855,6 @@ OpenItemStackContainer
 OpenPage
 OpenProcessingBench
 PlaceFluid
-
 Portal
 PortalReturn 
 PrefabSelectionInteraction
@@ -794,7 +879,6 @@ TeleportInstance
 Teleporter 
 ToggleGlider 
 TriggerSpawnMarkers 
-UseBlock
 UseCaptureCrate
 UseCoop
 UseEntity
