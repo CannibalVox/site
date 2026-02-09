@@ -33,10 +33,11 @@
     "---Visual/Audio---",
     "send-notifications.mdx",
     "chat-formatting.mdx",
-    "ui.mdx",
-    "text-hologram.mdx",
-    "playing-sounds.mdx",
-    "---Other Topics---",
+    "---Items & Inventory---",
+    "item-registry.mdx",
+    "item-interaction.mdx",
+    "inventory-management.mdx",
+    "---More Topics---",
     "..."
   ],
   "icon": "Terminal"
