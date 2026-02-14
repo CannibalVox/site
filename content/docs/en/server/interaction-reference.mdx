@@ -1,6 +1,7 @@
 ---
-title: "Interaction Type Reference"
+title: "Interactions"
 description: "A list of all Interaction types provided by Hypixel, along with the meaning of all fields, and how they fit together."
+icon: "List"
 authors:
     - name: "Stephen Baynham"
       url: "https://github.com/cannibalvox"
@@ -1079,6 +1080,13 @@ If any part of this process does not proceed for any reason (for instance, if th
 | AllowedFluids | `Array`<br />(Element Type: `String`) | **Yes** | If any of these fluids are targeted by the player, the player's held item will be converted to the keyed item state and `Durability` and `TransformFluid` will be used. |
 | Durability | `Double`<br />(Default: -1.0) | **No** | If the player's held item changes item states, this value is the new item's durability, unless it is negative, in which case the item will begin at full durability. If the player's held item is already in the item state, and the item is not already at full durability, this value will be added to the item's durability. |
 | TransformFluid | `String` | **No** | If provided, this field is a fluid id that the targeted fluid block should be transformed to if the player's held item is successfully updated. |
+
+
+## Entities
+
+
+## Stats 
+
 
 
 ## EntityEffects
