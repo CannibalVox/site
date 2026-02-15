@@ -1,12 +1,11 @@
 ---
 title: "Interactions"
-description: "A list of all Interaction types provided by Hypixel, along with the meaning of all fields, and how they fit together."
+description: "A list of most Interaction types provided by Hypixel, along with the meaning of their fields, and how they fit together."
 icon: "List"
 authors:
     - name: "Stephen Baynham"
       url: "https://github.com/cannibalvox"
 ---
-
 
 
 ### The Interaction Base Type
@@ -292,17 +291,66 @@ This interaction immediately executes the provided RootInteraction as part of th
 | RootInteraction | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | The RootInteraction to execute. |
 
 
-### SendMessage 
+### Selector 
 
-This interaction sends a message to the Owner entity if that entity can receive messages.  Otherwise, the message 
-  is written to the server logs.  If the entity is a player, the message will appear in the player's chat window.
+This interaction will execute a Selector to find entities and/or blocks (depending on the Selector) and fork off an 
+  interaction chain for each located entity or block. This interaction will not wait for those interaction chains
+  to complete and is indifferent to their fate. The forked interaction chains will use the located entity/block as 
+  their target entity/target block. Each entity or block will only fork one interaction chain over the life of this 
+  interaction.  The Selector is guaranteed to run once for each execution of this interaction, but some Selectors 
+  are intended to be run over a period of time and sweep across an area to locate targets. In order to use those Selectors 
+  properly, you will need to extend the execution time of this interaction using `RunTime` or `WaitForAnimationToFinish`.
+  The Selector will be executed repeatedly over the lifetime of the interaction.
 
-**SendMessage  
+If the Selector is configured to locate entities, you can add additional sets of entity matching rules. If a located entity 
+  matches one of the rules, the matching RootInteraction will be forked instead of the standard `HitEntity` RootInteraction.
+
+Entities located by the Selector will be ignored if they do not have a NetworkId, if they are dead, or if they are invulnerable.
+  The only exception to this rule is that players in Creative Mode that are marked to receive hits will not be ignored.
+
+This interaction's failure conditions are configurable via the `FailOn` field. You can configure this interaction to never 
+  fail, to fail if the Selector does not locate any blocks before this interaction finishes executing, to fail if the 
+  Selector does not locate any entities before this interaction finishes executing, or to fail in either case.
+
+**Selector Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
-| Message | `String` | **No** | A text message to be sent to the Owner entity.  If this field is not provided, `Key` is used instead. |
-| Key | `String` | **No** | A translation key for a message to be sent to the Owner entity. If `Message` is provided, then this field is ignored. |
+| Selector | `Selector` | **Yes** | The Selector is executed at least once and may be executed repeatedly to locate blocks and/or entities in an area. |
+| HitEntity | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If included and the `Selector` locates an entity that does not match any `HitEntityRules`, this RootInteraction will be forked into a new interaction chain with the located entity as the target entity. |
+| HitEntityRules | `Array`<br />(Element Type: `HitEntity`) | **No** | If included, these rules will be matched against any entity located by the `Selector`. If an entity matches a set of rules, the RootInteraction associated with the rules will be forked instead of the standard `HitEntity` interaction. |
+| HitBlock | `Asset`<br />(Asset Type: `RootInteraction`) | **No** | If included and the `Selector` locates a block, this RootInteraction will be forked into a new interaction chain with the located block as the block target. |
+| FailOn | `FailOnType`<br />(Default: `Neither`) | **No** | Defines under what circumstances this interaction will fail.  It can be marked to fail when it completes without locating any blocks, it can be marked to fail when it completes without locating any entities, both, or neither. |
+| IgnoreOwner | `Boolean`<br />(Default: true) | **No** | If true, the Selector will not locate the User entity of this interaction. |
+
+**HitEntity Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Matchers | `Array`<br />(Element Type: `EntityMatcher`) | **Yes** | A set of rules that an entity must match. An entity must successful match all rules to be considered. |
+| Next | `Asset`<br />(Asset Type: `RootInteraction`) | **Yes** | The RootInteraction to fork if an entity matches all rules. |
+
+**EntityMatcher Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `String` | **Yes** | If provided, specifies a type of EntityMatcher to use. Each matcher type may come with additional fields. |
+| Invert | `Boolean`<br />(Default: false) | **No** | If true, an entity must fail this rule for it to be marked as succeeded. |
+
+**EntityMatcher Type: Player**
+
+This EntityMatcher will succesfully match the entity only if they are a player.
+
+**EntityMatcher Type: Vulnerable**
+
+This Entitymatcher will successfully match the entity only if they are not marked as invulnerable.
+
+**FailOnType Values**
+
+- `Neither`
+- `Entity`
+- `Block`
+- `Either`
 
 
 ### Serial 
@@ -388,6 +436,28 @@ This interaction will trigger a cooldown on the User entity with a specified con
   from that active cooldown will overwrite data in the RootInteraction's cooldown, but not data in your `Cooldown` field.
 
 **ResetCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Cooldown | `InteractionCooldown` | **No** | A cooldown configuration to use for the new, reset cooldown. |
+
+**InteractionCooldown Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Id | `String` | **No** | The cooldown id to use for this cooldown. If not provided, the RootInteraction's cooldown id will be used, if any. |
+| Cooldown | `Float`<br />(Default: 0.0) | **No** | The duration of the cooldown, in seconds. | 
+| Charges | `Array`<br />(Element Type: `Float`) | **No** | If provided, a list of how many charges this cooldown can build, and how long each charge takes to build, in seconds. |
+| InterruptRecharge | `Boolean`<br />(Default: false) | **No** | If true, the charge time will be reset when the number of charges changes. |
+| ClickBypass | `Boolean`<br />(Default: false) | **No** | If true, RootInteractions keyed to this cooldown can still be activated when it is on cooldown provided that the RootInteraction was triggered by a distinct key or mouse button press on the client. |
+
+
+### TriggerCooldown 
+
+This interaction is similar to ResetCooldown, except instead of refilling the cooldown's charges, one charge will be deducted
+  as normal.
+
+**TriggerCooldown Fields**
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
@@ -659,10 +729,40 @@ This interaction will only have an effect on damage taken by one of the DamageCa
 
 | Field Name | Type | Required? | Notes |
 |------------|------|-----------|-------|
+| Type | `String` | **No** | If provided, specifies a type of knockback to use. Each knockback type may come with additional fields. |
 | Force | `Double`<br />(Default: 0.0) | **No** | The amount of force to apply to the Owner entity. |
 | Duration | `Double`<br />(Default: 0.0) | **No** | If 0.0, apply the force as a single impulse.  If more, continuously apply the force over a period of time. |
 | VelocityType | `ChangeVelocityType`<br />(Default: `Add`) | **No** | How to apply the force, either adding it to the entity's current velocity, or setting the velocity to the knockback force. |
 | VelocityConfig | `VelocityConfig` | **No** | Characteristics of friction as the Owner entity is thrown by this knockback. |
+
+**Knockback Type: Force**
+
+Apply the calculated knockback force along the provided direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Direction | `Vector3`<br />(Default: Up) | **No** | Which direction the player should be flung, relative to the direction of the attack. |
+
+**Knockback Type: Point**
+
+Apply the calculated knockback force laterally along the XZ plane, plus provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| OffsetX | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback left or right perpendicular to the direction of the attack. |
+| OffsetZ | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback, forward or backward along the directon of the attack. |
+| RotateY | `Integer`<br />(Default: 0) | **No** | Rotate the knockback direction around the Y axis, where 0 is the default attack direction. |
+| VelocityY | `Float`<br />(Default: 0.0) | **No** | Add vertical velocity to the knockback force after the direction and force has been calculated. |
+
+**Knockback Type: Directional**
+
+Apply the calculated knockback force along the attack direction, removing any vertical component and replacing it with a provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RelativeX | `Float`<br />(Default: 0) | **No** | Apply additional force left or right perpendicular to the direction of the attack. The additional force is multiplied by the knockback strength. |
+| RelativeZ | `Float`<br />(Default: 0) | **No** | Apply additional force forward or backward along the attack direction. The additional force is multiplied by the knockback strength. |
+| VelocityY | `Float`<br />(Default: 0) | **No** | Replace the vertical velocity of the knockback with this value.  This value is not multiplied by knockback strength. |
 
 **VelocityConfig Fields**
 
@@ -1084,9 +1184,308 @@ If any part of this process does not proceed for any reason (for instance, if th
 
 ## Entities
 
+### DamageEntity
+
+This interaction does not inherit from SimpleInteraction, but adds its own Next and Failed fields that 
+  work similarly.
+
+This interaction will cause the User entity to damage the Target entity.  It has the capability to apply different 
+  damage based on the direction of the attack or what body part was targeted by the User entity, with each possibility 
+  providing different damage calculations, effects, and Next interaction. If multiple entires match the attack, `TargetedDamage`
+  (body part damage) takes highest priority, then the first matching `AngledDamage` in the list, then the default 
+  damage in the base interaction fields.  It is possible for elements of these different damage priorities to be taken peacemeal if higher-priority 
+  damage fields do not overwrite lower-priority damage fields. For instance, 
+  damage calculation could be taken from `TargetedDamage`, the damage effects could be taken from the first matching 
+  `AngledDamage`, and the Next interaction coming from the default damage field.
+
+If all damage dealt by this interaction is cancelled, then this interaction will fail, and the `Failed` interaction 
+  will be executed next in the chain. If any damage dealt by this interaction is blocked, then this interaction will 
+  succeed, but the `Blocked` interaction wil lbe executed next in the chain. Otherwise, the highest-precedent matching 
+  `Next` interaction that you provide will be executed.  For instance, if you provide `Next` interactions for all 
+  `TargetedDamage` and `AngledDamage` entries, and one in the interaction's `Next` field, then a headshot could result 
+  in a unique `Next` interaction being executed, even if there is a matching `AngledDamage` entry. However, if you leave 
+  the `Next` interaction out of your `TargetedDamage` entries, a special `Next` interaction for backstabs could be 
+  executed.  Otherwise, the `Next` field in the root of the interaction will be executed instead.
+
+DamageEntity has an unusual relationship with `RunTime`. This interaction always ends immediately after its first tick,
+  regardless of the status of `RunTime` or `WaitForAnimationToFinish`.  However, if damage dealt by this interaction is 
+  calculated as `DamageCalculatorType` `Dps`, then the `RunTime` will be used to determine the precise amount of damage to 
+  deal. If `RunTime` is 0, then no damage will be dealt.
+
+**DamageEntity Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| DamageCalculator | `DamageCalculator` | **No** | If provided, describes the damage amounts and types to apply to the Target entity. |
+| DamageEffects | `DamageEffects` | **No** | If provided, describes particles, sounds, knockback, etc. to apply to the target entity on damage. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No**  After this interaction has finished, "Next" will be executed if damage was dealt to the target and none was blocked. |
+| AngledDamage | `Array`<br />(Element Type: `AngledDamage`) | **No** | If provided, allows alternative `DamageCalculator`, `DamageEffects`, and `Next` entries for attacks that approach the target from certain angles. |
+| TargetedDamage | `Map`<br />(Key Type: `String`, Value Type: `TargetedDamage`) | **Yes** | This field must be provided, but is not required to have any entries.  This is a map from body part names to `TargetedDamage` values. Hypixel only uses one body part name: `Head`, and it is not clear whether there are others.  If provided, allows alternative `DamageCalculator`, `DamageEffects`, and `Next` entries for attacks that damage specific enemy body parts. |
+| EntityStatsOnHit | `Array`<br />(Element Type: `EntityStatOnHit`) | **No** | If provided, allows this attack to reduce enemy stats other than health.  Each individual damage application dealt by the same ability will apply stat reductions, at diminishing returns. All damage dealt in interaction chains forked by a Selector interaction will share the number of hits across all targets. |
+| Failed | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Failed" will be executed if no damage hits were applied to the player, or if all damage hits were cancelled. |
+| Blocked | `Asset`<br />(Asset Type: `Interaction`) | **No** | After this interaction has finished, "Blocked" will be executed if any damage hits were blocked by the target. |
+
+**DamageCalculator Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `DamageCalculatorType`<br />(Default: Absolute) | **No** | Whether the damage being applied is `Absolute` or `Dps'. |
+| Class | `DamageClass`<br />(Default: Unknown) | **No** | The type of attack producing the damage. Some weapon systems apply equipment modifiers based on this value. |
+| BaseDamage | `Map`<br />(Key Type: `DamageCause`, Value Type: `Float`) | **No** | A set of DamageCauses and how much base damage is dealt for each. |
+| SequentialModifierStep | `Float`<br />(Default: 0.0) | **No** | Value between 0.0-1.0. Each additional hit from a single ability will have its damage reduced by this much as a percentage. All damage dealt in interaction chains forked by a Selector interaction will share the number of hits across all targets. |
+| SequentialModifierMinimum | `Float`<br />(Default: 0.0) | **No** | Value between 0.0-1.0. `SequentialModifierStep` cannot reduce damage below this percentage regardless of the number of hits. |
+| RandomPercentageModifier | `Float`<br />(Default: 0.0) | **No** | A random value between +/- this amount multiplied by the base damage will be added to the base damage. |
+
+**DamageEffects Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| ModelParticles | `Array`<br />(Element Type: `ModelParticle`) | **No** | Particle systems to trigger in the first-person view. |
+| WorldParticles | `Array`<br />(Element Type: `WorldParticle`) | **No** | Particle systems to trigger in the third-person view. |
+| LocalSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the attacking entity if they are a player. |
+| WorldSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | Sound to play in the world at the Target entity's location. |
+| PlayerSoundEventId | `Asset`<br />(Asset Type: `SoundEvent`) | **No** | 2D sound to play locally to the Target entity if they are a player. |
+| ViewDistance | `Double`<br />(Default: 75.0) | **No** | Distance at which these effects should play for other players. |
+| Knockback | `Knockback` | **No** | The properties of the knockback that will be applied. |
+| CameraEffect | `Asset`<br />(Asset Type: `CameraEffect`) | **No** | CameraEffect to briefly apply locally to the Target entity if they are a player. |
+| StaminaDrainMultiplier | `Float`<br />(Default: 1.0) | **No** | This multiplier is applied to the stamina cost incurred by the target blocking, if any. |
+
+**AngledDamage Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| AngleDistance | `Float`<br />(Default: 0) | **No** | The width in degrees of the matching arc around the Target entity. If the attack against the Target originates from within the arc, then the properties below will be applied to the attack, if provided. |
+| Angle | `Float`<br />(Default: 0.0) | **No** | The angle in degrees around the Target entity at which the matching arc is centered. |
+| DamageCalculator | `DamageCalculator` | **No** | If provided and the attack against the Target entity originates from within the provided arc, this DamageCalculator will override the interaction's `DamageCalculator` field. |
+| DamageEffects | `DamageEffects` | **No** | If provided and the attack against the Target entity originates from within the provided arc, this DamageEffects will override the interaction's `DamageEffects` field. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and the attack against the Target entity originates from within the provided arc, this Interaction will override the interaction's `Next` field. |
+
+**TargetedDamage Fields** 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| DamageCalculator | `DamageCalculator` | **No** | If provided and this TargetedDamage was matched, this DamageCalculator will override the interaction's `DamageCalculator` field and the `DamageCalculator` field of any matching `AngledDamage`. |
+| DamageEffects | `DamageEffects` | **No** | If provided and this TargetedDamage was matched, this DamageEffects will override the interaction's `DamageEffects` field and the `DamageEffects` field of any matching `AngledDamage`. |
+| Next | `Asset`<br />(Asset Type: `Interaction`) | **No** | If provided and this TargetedDamage was matched, this Interaction will override the interaction's `Next` field and the `Next` field of any matching `AngledDamage`. |
+
+**EntityStatOnHit Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| EntityStatId | `Asset`<br />(AssetType: `EntityStatType`) | **Yes** | Which entity stat to affect. |
+| Amount | `Float`<br />(Default: 0.0) | **No** | How much of the stat to apply for each damage application. Use negative numbers to reduce stats. |
+| MultipliersPerEntitiesHit | `Array`<br />(Element Type: `Float`, Default: `[1.0, 0.6, 0.4, 0.2, 0.1]`) | **No** | The diminishing returns curve to be applied for multiple damage applications by the same ability. Each hit's stat impact will be multiplied by the next value in the list.  If there are more hits than array elements, subsequent hits will be multiplied by `MultiplierPerExtraEntityHit`. |
+| MultiplierPerExtraEntityHit | `Float`<br />(Default: 0.05) | **No** | If an ability carries out more damage applications than there are elements in the `MultipliersPerEntitiesHit` array, then subsequent stat values will be multiplied by this number. |
+
+**Knockback Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Type | `String` | **No** | If provided, specifies a type of knockback to use. Each Target type may come with additional fields. |
+| Force | `Double`<br />(Default: 0.0) | **No** | The amount of force to apply to the Owner entity. |
+| Duration | `Double`<br />(Default: 0.0) | **No** | If 0.0, apply the force as a single impulse.  If more, continuously apply the force over a period of time. |
+| VelocityType | `ChangeVelocityType`<br />(Default: `Add`) | **No** | How to apply the force, either adding it to the entity's current velocity, or setting the velocity to the knockback force. |
+| VelocityConfig | `VelocityConfig` | **No** | Characteristics of friction as the Owner entity is thrown by this knockback. |
+
+**Knockback Type: Force**
+
+Apply the calculated knockback force along the provided direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Direction | `Vector3`<br />(Default: Up) | **No** | Which direction the entity should be flung, relative to the direction of the attack. |
+
+**Knockback Type: Point**
+
+Apply the calculated knockback force laterally along the XZ plane, plus provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| OffsetX | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback left or right perpendicular to the direction of the attack. |
+| OffsetZ | `Integer`<br />(Default: 0) | **No** | Offset the source position of the knockback, forward or backward along the directon of the attack. |
+| RotateY | `Integer`<br />(Default: 0) | **No** | Rotate the knockback direction around the Y axis, where 0 is the default attack direction. |
+| VelocityY | `Float`<br />(Default: 0.0) | **No** | Add vertical velocity to the knockback force after the direction and force has been calculated. |
+
+**Knockback Type: Directional**
+
+Apply the calculated knockback force along the attack direction, removing any vertical component and replacing it with a provided Y velocity.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| RelativeX | `Float`<br />(Default: 0) | **No** | Apply additional force left or right perpendicular to the direction of the attack. The additional force is multiplied by the knockback strength. |
+| RelativeZ | `Float`<br />(Default: 0) | **No** | Apply additional force forward or backward along the attack direction. The additional force is multiplied by the knockback strength. |
+| VelocityY | `Float`<br />(Default: 0) | **No** | Replace the vertical velocity of the knockback with this value.  This value is not multiplied by knockback strength. |
+
+**VelocityConfig Fields**
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| GroundResistance | `Float`<br />(Default: 0.82) | **No** | The minimum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| GroundResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in contact with the ground.  1.0 = no friction, 0.0 = total friction |
+| AirResistance | `Float`<br />(Default: 0.96) | **No** | The minimum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction | 
+| AirResistanceMax | `Float`<br />(Default: 0.0) | **No** | The maximum amount of friction applied when the entity is in the air. 1.0 = no friction, 0.0 = total friction |
+| Threshold | `Float`<br />(Default: 1.0) | **No** | The speed at which the maximum amount of friction will be applied to the entity. The amount of friction applied will increase from minimum to maximum as the entity moves from 0 to this speed. |
+| Style | `VelocityThresholdStyle`<br />(Default: `Linear`) | **No** | The curve that friction follows as the entity's speed increases toward the `Threshold`. |
+
+**DamageCalculatorType Values**
+- `Absolute`
+- `Dps`
+
+**DamageClass Values**
+- `Unknown`
+- `Light`
+- `Charged`
+- `Signature`
+
+**ChangeVelocityType Values**
+- `Add`
+- `Set`
+
+**VelocityThresholdStyle Values**
+- `Linear`
+- `Exp`
+
+
+### LaunchProjectile 
+
+This is just a worse version of Projectile and is slated to be removed.  Use Projectile.
+
+
+### Projectile
+
+This interaction will spawn a new projectile at the User entity's eye position that will travel in its look direction.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Config | `Asset`<br />(Asset Type: `ProjectileConfig`) | **No** | Configuration describing the projectile to be spawned. |
+
+
+### RemoveEntity
+
+Despawns the specified entity from the world. This interaction will have no effect if the specified entity is a player. This 
+  interaction has no special failure conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Entity | `InteractionTarget`<br />(Default: User) | **No** | The entity to despawn. |
+
+**InteractionTarget Values**
+- `User` - The user of this interaction chain. The entity whose actions caused this interaction chain to be executed. This is usually the same as the Owner.
+- `Owner` - The owner of this interaction chain. The entity upon whom this interaction chain is executing.
+- `Target` - The entity target of this interaction chain, if any.  This value is mutable (and can therefore come from many places) but most commonly, it is an entity the User was targeting when this interaction chain began executing.
+
+
+### SendMessage 
+
+This interaction sends a message to the Owner entity if that entity can receive messages.  Otherwise, the message 
+  is written to the server logs.  If the entity is a player, the message will appear in the player's chat window.
+
+**SendMessage  
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Message | `String` | **No** | A text message to be sent to the Owner entity.  If this field is not provided, `Key` is used instead. |
+| Key | `String` | **No** | A translation key for a message to be sent to the Owner entity. If `Message` is provided, then this field is ignored. |
+
+
+### UseEntity
+
+This interaction is not in use by Hypixel and has some unusual qualities that mean it probably won't do what you want it
+  to.  Do not use it.
+
+This interaction will retrieve the entity currently targeted by the client (NOT the interaction chain's current Target 
+  entity) and execute that entity's RootInteraction for this interaction chain's current interaction type. The 
+  RootInteraction will be executed as part of this current interaction chain. None of the properties of this interaction 
+  chain will be modified.
+
+This interaction will fail if the client is not currently targeting an entity, or if no interaction for the current 
+  interaction type exists on the entity.
+
 
 ## Stats 
 
+Hytale's resource system has been written about fairly extensively.  You can use these interactions to modify stats in 
+  response to actions or use stats as a cost for abilities.
+
+### ChangeStat 
+
+This interaction applies a set of raw stat changes to the User entity. It has no special failure conditions.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| StatModifiers | `Map`<br />(Key Type: `EntityStatType`, Value Type: `Float`) | **Yes** | A set of stats to modify and what value to apply to them. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `StatModifiers` map represent flat values to apply to the stat total, or percentages (0.0-100.0). Percentage values are percentage of the difference between the maximum and minimum stat value. |
+| Behaviour | `ChangeStatBehavior`<br />(Default: Add) | **No** | Whether the values in the `StatModifiers` map represent deltas to add into the User entity's current stat values, or fixed values to set the entity's stats to. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**ChangeStatBehaviour Values**
+- `Add`
+- `Set`
+
+
+### ChangeStatWithModifier 
+
+This interaction is like ChangeStat, except an armor stat modifier can be chosen which will apply bonuses and penalties 
+  to a stat from the User entity's equipped armor before it is applied. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| StatModifiers | `Map`<br />(Key Type: `EntityStatType`, Value Type: `Float`) | **Yes** | A set of stats to modify and what value to apply to them. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `StatModifiers` map represent flat values to apply to the stat total, or percentages (0.0-100.0). Percentage values are percentage of the difference between the maximum and minimum stat value. |
+| Behaviour | `ChangeStatBehavior`<br />(Default: Add) | **No** | Whether the values in the `StatModifiers` map represent deltas to add into the User entity's current stat values, or fixed values to set the entity's stats to. |
+| InteractionModifierId | `InteractionModifierId` | **Yes** | The armor interaction modifier to apply bonuses and penalties for. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**ChangeStatBehaviour Values**
+- `Add`
+- `Set`
+
+**InteractionModifierId Values**
+- `Dodge`
+
+
+### StatsCondition
+
+This interaction will fail if the User entity cannot afford the specified stats costs, or if it does not have the 
+  requested stats. 
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Costs | `Map`<br />(Key Type:` EntityStatType`, Value Type: `Float`) | **Yes** | A set of costs that the User entity needs to be able to afford for this interaction to succeed. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `Costs` map represetn flat values or percentages (0.0-100.0).  Percentage values are percentage of the difference between the maximum and minimum value. |
+| LessThan | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail unless the User entity's current stat values are at or **below** the specified levels.  If false, they must be at or **above** the specified levels. |
+| Lenient | `Boolean`<br />(Default: false) | **No** | If true and `LessThan` is true, and a player's minimum stat value is below zero, then the player can afford a stat cost if the current value of a stat if above 0. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+
+### StatsConditionWithModifier
+
+This interaction is like StatsCondition, except an armor stat modifier can be chosen which will apply bonuses and penalties 
+  to a stat's cost from the User entity's equipped armor before it is compared.
+
+| Field Name | Type | Required? | Notes |
+|------------|------|-----------|-------|
+| Costs | `Map`<br />(Key Type:` EntityStatType`, Value Type: `Float`) | **Yes** | A set of costs that the User entity needs to be able to afford for this interaction to succeed. |
+| ValueType | `ValueType`<br />(Default: Absolute) | **No** | Whether the values in the `Costs` map represetn flat values or percentages (0.0-100.0).  Percentage values are percentage of the difference between the maximum and minimum value. |
+| LessThan | `Boolean`<br />(Default: false) | **No** | If true, this interaction will fail unless the User entity's current stat values are at or **below** the specified levels.  If false, they must be at or **above** the specified levels. |
+| Lenient | `Boolean`<br />(Default: false) | **No** | If true and `LessThan` is true, and a player's minimum stat value is below zero, then the player can afford a stat cost if the current value of a stat if above 0. |
+| InteractionModifierId | `InteractionModifierId` | **Yes** | The armor interaction modifier to apply bonuses and penalties for. |
+
+**ValueType Values**
+- `Absolute`
+- `Percent`
+
+**InteractionModifierId Values**
+- `Dodge`
 
 
 ## EntityEffects
@@ -1213,69 +1612,3 @@ If the target block is tilled soil or a farming block on top of tilled soil, wat
 | UserLatestTarget | `Boolean`<br />(Default: false) | **No** | If true, update this interaction chain's target block from the client's current cursor position before executing the interaction. |
 | Duration | `Integer`<br />(Default: 0) | **No** | The duration in seconds to water the soil for. |
 | RefreshModifiers | `Array`<br />(Element Type: `String`) | **No** | Does nothing. |
-
-
-
-
-
-ChangeStat 
-ChangeStatWithModifier 
-StatsCondition
-StatsConditionWithModifier
-
-DamageEntity 
-RemoveEntity
-Projectile
-UseEntity
-UseNPC 
-SpawnNPC 
-ContextualUseNPC 
-
-
-
-
-MovementCondition
-
-Explode 
-SetMemoriesCapacity
-MemoriesCondition
-
-TeleportConfigInstance
-TeleportInstance
-Teleporter 
-ExitInstance
-
-SpawnDeployableAtHitLocation
-SpawnDeployableFromRaycast
-
-ApplyForce 
-Bed 
-BuilderTool 
-Camera 
-CameraShake 
-CanBreakRespawnPoint
-Door
-HubPortal
-LaunchPad
-LaunchProjectile
-LearnRecipe
-Mount 
-OpenBenchPage
-OpenContainer
-OpenCustomUI
-OpenItemStackContainer
-OpenPage
-OpenProcessingBench
-PlaceFluid
-Portal
-PortalReturn 
-PrefabSelectionInteraction
-PrefabSetAnchorInteraction
-Seating 
-SpawnMinecart 
-SpawnPrefab
-StartObjective
-ToggleGlider 
-TriggerSpawnMarkers 
-UseCaptureCrate
-UseCoop
